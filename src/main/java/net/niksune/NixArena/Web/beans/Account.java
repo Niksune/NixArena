@@ -1,9 +1,8 @@
 package net.niksune.NixArena.Web.beans;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Account {
@@ -12,6 +11,13 @@ public class Account {
     private int ID = 0;
     private String email;
     private String password;
+    @OneToMany(
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Charac> characs = new ArrayList<Charac>();
+
 
     public Account() {
     }
@@ -22,6 +28,7 @@ public class Account {
                 "ID=" + ID +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", characs=" + characs +
                 '}';
     }
 
@@ -58,5 +65,13 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Charac> getCharacters() {
+        return characs;
+    }
+
+    public void setCharacters(List<Charac> characs) {
+        this.characs = characs;
     }
 }
