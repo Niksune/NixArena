@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class MainWebController {
 
@@ -17,9 +19,14 @@ public class MainWebController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("/allAccounts")
-    public Iterable<Account> getAllAccounts() {
+    @GetMapping("/allAccountsComplete")
+    public Iterable<Account> getAllAccountsComplete() {
         return accountService.getAllAccounts();
+    }
+
+    @GetMapping("/allAccountsInfos")
+    public Iterable<Account> getAllAccountsInfos() {
+        return accountRepositoryInterface.findAll();
     }
 
     @GetMapping("/mainScenario")
@@ -30,7 +37,6 @@ public class MainWebController {
         nix.getCharacters().add(enzo);
         accountRepositoryInterface.save(nix);
         return("Account added with one character !");
-
 
     }
 
