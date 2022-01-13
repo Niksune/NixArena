@@ -12,6 +12,7 @@ public class AccountService {
     @Autowired
     private AccountRepositoryInterface accountRepositoryInterface;
 
+    /*
     public Iterable<Account> getAllAccounts() {
         Iterable<Account> accounts = accountRepositoryInterface.findAll();
 
@@ -22,6 +23,7 @@ public class AccountService {
 
         return accounts;
     }
+    */
 
 
 }

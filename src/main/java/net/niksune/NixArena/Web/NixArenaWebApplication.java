@@ -16,7 +16,7 @@ public class NixArenaWebApplication {
 	}
 
 
-	//Crappy solution to manage the Lazy Fetch : if I do not load the associated entities (AccountService->loadAccounts) it returns null instead of crash
+	//Manage the lazy fetch, if a property is not loaded, fill it with a null (not crappy at all)
 	@Bean
 	public static Hibernate5Module datatypeHibernateModule() { return new Hibernate5Module();}
 

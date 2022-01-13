@@ -20,14 +20,15 @@ public class MainWebController {
     private AccountService accountService;
 
     @GetMapping("/allAccountsComplete")
+    public Iterable<Account> getAllAccountsComplete() { return accountRepositoryInterface.findAll(); }
+
+    /*
+    @GetMapping("/allAccountsInfos")
     public Iterable<Account> getAllAccountsComplete() {
         return accountService.getAllAccounts();
     }
+    */
 
-    @GetMapping("/allAccountsInfos")
-    public Iterable<Account> getAllAccountsInfos() {
-        return accountRepositoryInterface.findAll();
-    }
 
     @GetMapping("/mainScenario")
     public String mainScenario() {

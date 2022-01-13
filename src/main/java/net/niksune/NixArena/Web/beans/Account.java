@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NamedEntityGraph(name = "graph.Account.characters",
+        attributeNodes = @NamedAttributeNode("characs"))
 public class Account {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
