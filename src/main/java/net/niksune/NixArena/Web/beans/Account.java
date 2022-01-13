@@ -7,6 +7,7 @@ import java.util.List;
 @Entity
 @NamedEntityGraph(name = "graph.Account.characters",
         attributeNodes = @NamedAttributeNode("characs"))
+@NamedEntityGraph(name = "graph.Account.onlyInfos")
 public class Account {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

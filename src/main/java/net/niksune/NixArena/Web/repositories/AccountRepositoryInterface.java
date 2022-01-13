@@ -2,11 +2,23 @@ package net.niksune.NixArena.Web.repositories;
 
 import net.niksune.NixArena.Web.beans.Account;
 import org.springframework.data.jpa.repository.EntityGraph;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AccountRepositoryInterface extends CrudRepository<Account,Integer> {
+import java.util.List;
+import java.util.Optional;
 
-    @Override
+public interface AccountRepositoryInterface extends JpaRepository<Account,Integer> {
+
     @EntityGraph(value="graph.Account.characters",type= EntityGraph.EntityGraphType.FETCH)
-    Iterable<Account> findAll();
+    List<Account> findAllCompleteBy();
+
+    @EntityGraph(value="graph.Account.onlyInfos",type= EntityGraph.EntityGraphType.FETCH)
+    List<Account> findAllInfosBy();
+
+    @EntityGraph(value="graph.Account.characters",type= EntityGraph.EntityGraphType.FETCH)
+    Optional<Account> findCompleteByID(int ID);
+
+    @EntityGraph(value="graph.Account.onlyInfos",type= EntityGraph.EntityGraphType.FETCH)
+    Optional<Account> findInfosByID(int ID);
+
 }
