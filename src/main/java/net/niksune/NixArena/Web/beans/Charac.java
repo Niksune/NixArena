@@ -11,7 +11,7 @@ public class Charac {
     private String name;
     private int XP = 0;
     private int level = 1;
-    @OneToOne(fetch = FetchType.EAGER,
+    @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Weapon weaponEquipped = null;
 
