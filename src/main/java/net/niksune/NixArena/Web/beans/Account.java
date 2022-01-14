@@ -8,6 +8,12 @@ import java.util.List;
 @NamedEntityGraph(name = "graph.Account.characters",
         attributeNodes = @NamedAttributeNode("characs"))
 @NamedEntityGraph(name = "graph.Account.onlyInfos")
+@NamedEntityGraph(
+        name = "graph.Account.characAndWeapons",
+        attributeNodes = @NamedAttributeNode(value = "characs", subgraph = "Charac.weaponEquipped"),
+        subgraphs = {
+                @NamedSubgraph(name = "Charac.weaponEquipped",
+                        attributeNodes = @NamedAttributeNode(value = "weaponEquipped")) })
 public class Account {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

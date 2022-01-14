@@ -9,8 +9,11 @@ import java.util.Optional;
 
 public interface AccountRepositoryInterface extends JpaRepository<Account,Integer> {
 
-    @EntityGraph(value="graph.Account.characters",type= EntityGraph.EntityGraphType.FETCH)
+    @EntityGraph(value="graph.Account.characAndWeapons",type= EntityGraph.EntityGraphType.FETCH)
     List<Account> findAllCompleteBy();
+
+    @EntityGraph(value="graph.Account.characters",type= EntityGraph.EntityGraphType.FETCH)
+    List<Account> findAllWithCharacsBy();
 
     @EntityGraph(value="graph.Account.onlyInfos",type= EntityGraph.EntityGraphType.FETCH)
     List<Account> findAllInfosBy();

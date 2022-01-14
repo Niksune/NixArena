@@ -1,9 +1,6 @@
 package net.niksune.NixArena.Web.beans;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Charac {
@@ -14,6 +11,9 @@ public class Charac {
     private String name;
     private int XP = 0;
     private int level = 1;
+    @OneToOne(fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    private Weapon weaponEquipped = null;
 
     @Override
     public String toString() {
@@ -35,6 +35,14 @@ public class Charac {
     public Charac(String name, int level) {
         this.name = name;
         this.level = level;
+    }
+
+    public Weapon getWeaponEquipped() {
+        return weaponEquipped;
+    }
+
+    public void setWeaponEquipped(Weapon weaponEquipped) {
+        this.weaponEquipped = weaponEquipped;
     }
 
     public int getID() {
