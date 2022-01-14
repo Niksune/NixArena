@@ -6,6 +6,7 @@ import net.niksune.NixArena.Web.beans.Charac;
 import net.niksune.NixArena.Web.beans.Weapon;
 import net.niksune.NixArena.Web.repositories.AccountRepositoryInterface;
 import net.niksune.NixArena.Web.repositories.CharacRepositoryInterface;
+import net.niksune.NixArena.Web.repositories.WeaponRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,9 +20,13 @@ public class MainWebController {
     @Autowired
     private AccountRepositoryInterface accountRepositoryInterface;
     @Autowired
-    private AccountService accountService;
-    @Autowired
     private CharacRepositoryInterface characRepositoryInterface;
+    @Autowired
+    private WeaponRepositoryInterface weaponRepositoryInterface;
+
+    @Autowired
+    private AccountService accountService;
+
 
     @GetMapping("/allAccountsComplete")
     public Iterable<Account> getAllAccountsComplete() { return accountRepositoryInterface.findAllCompleteBy(); }
@@ -56,6 +61,20 @@ public class MainWebController {
         nix.getCharacters().add(enzo);
         accountRepositoryInterface.save(nix);
         return("Account added with one armed character !");
+
+    }
+
+    @GetMapping("/makeWeapons")
+    public String makeWeapons() {
+
+        for(int i = 1; i<11;i++)
+        {
+            Weapon w = new Weapon("Tooth Pick",i);
+            weaponRepositoryInterface.save(w);
+
+        }
+
+        return("Weapons Created");
 
     }
 

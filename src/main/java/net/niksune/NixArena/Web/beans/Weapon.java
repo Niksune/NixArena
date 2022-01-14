@@ -17,6 +17,16 @@ public class Weapon {
     private int level;
     private int attack;
 
+    @Override
+    public String toString() {
+        return "Weapon{" +
+                "ID=" + ID +
+                ", name='" + name + '\'' +
+                ", level=" + level +
+                ", attack=" + attack +
+                '}';
+    }
+
     public Weapon() {
     }
 
