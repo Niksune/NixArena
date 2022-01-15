@@ -8,13 +8,12 @@ import net.niksune.NixArena.Web.repositories.AccountRepositoryInterface;
 import net.niksune.NixArena.Web.repositories.CharacRepositoryInterface;
 import net.niksune.NixArena.Web.repositories.WeaponRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5500")
 public class MainWebController {
 
     @Autowired
@@ -76,6 +75,14 @@ public class MainWebController {
 
         return("Weapons Created");
 
+    }
+
+
+    @PostMapping("/createAccount")
+    public int postAccount(@RequestBody Account account){
+        System.out.println("Ajout de : "+account);
+        accountRepositoryInterface.save(account);
+        return 1;
     }
 
 
