@@ -27,6 +27,31 @@ public class MainWebController {
     private AccountService accountService;
 
 
+    /* ---------SCENARIOS--------- */
+
+    @GetMapping("/mainScenario")
+    public String mainScenario() {
+
+        Account nix = new Account("autre@gmail.com", "Autre");
+        Charac enzo = new Charac("Mathieu");
+        Weapon rapier = new Weapon("Spear", 5);
+        enzo.setWeaponEquipped(rapier);
+        nix.getCharacters().add(enzo);
+        accountRepositoryInterface.save(nix);
+        return ("Account added with one armed character !");
+    }
+
+    @GetMapping("/makeWeapons")
+    public String makeWeapons() {
+        for (int i = 1; i < 11; i++) {
+            Weapon w = new Weapon("Tooth Pick", i);
+            weaponRepositoryInterface.save(w);
+        }
+        return ("Weapons Created");
+    }
+
+    /* ---------ACCOUNTS--------- */
+
     @GetMapping("/allAccountsComplete")
     public Iterable<Account> getAllAccountsComplete() {
         return accountRepositoryInterface.findAllCompleteBy();
@@ -52,38 +77,7 @@ public class MainWebController {
         return accountRepositoryInterface.findCompleteByID(Integer.parseInt(id));
     }
 
-    @GetMapping("/allCharacs")
-    public Iterable<Charac> getAllCharacs() {
-        return characRepositoryInterface.findAll();
-    }
-
-
-    @GetMapping("/mainScenario")
-    public String mainScenario() {
-
-        Account nix = new Account("autre@gmail.com", "Autre");
-        Charac enzo = new Charac("Mathieu");
-        Weapon rapier = new Weapon("Spear", 5);
-        enzo.setWeaponEquipped(rapier);
-        nix.getCharacters().add(enzo);
-        accountRepositoryInterface.save(nix);
-        return ("Account added with one armed character !");
-
-    }
-
-    @GetMapping("/makeWeapons")
-    public String makeWeapons() {
-
-        for (int i = 1; i < 11; i++) {
-            Weapon w = new Weapon("Tooth Pick", i);
-            weaponRepositoryInterface.save(w);
-
-        }
-
-        return ("Weapons Created");
-
-    }
-
+    // Others HTTP Requests
 
     @PostMapping("/accounts")
     public int postAccount(@RequestBody Account account) {
@@ -92,10 +86,26 @@ public class MainWebController {
         return 1;
     }
 
-
     @DeleteMapping("/accounts/{id}")
     public int deleteAccountById(@PathVariable("id") String id) {
         accountRepositoryInterface.deleteById(Integer.parseInt(id));
+        return 1;
+    }
+
+    /* ---------CHARACS--------- */
+
+    @GetMapping("/allCharacs")
+    public Iterable<Charac> getAllCharacs() {
+        return characRepositoryInterface.findAll();
+    }
+
+    /* ---------INTERACTIONS--------- */
+
+    @PostMapping("/accounts/{id}/add-charac")
+    public int addCharacToAccount(@PathVariable("id") String id,@RequestBody Charac charac) {
+        Account account = accountRepositoryInterface.findCompleteByID(Integer.parseInt(id)).get();
+        account.getCharacters().add(charac);
+        accountRepositoryInterface.save(account);
         return 1;
     }
 
