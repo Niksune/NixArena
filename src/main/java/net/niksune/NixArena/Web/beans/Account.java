@@ -18,7 +18,7 @@ public class Account {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID = 0;
-    private String email;
+    private String name;
     private String password;
     @OneToMany(
             fetch = FetchType.LAZY,
@@ -35,20 +35,20 @@ public class Account {
     public String toString() {
         return "Account{" +
                 "ID=" + ID +
-                ", email='" + email + '\'' +
+                ", email='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", characs=" + characs +
                 '}';
     }
 
-    public Account(int ID, String email, String password) {
+    public Account(int ID, String name, String password) {
         this.ID = ID;
-        this.email = email;
+        this.name = name;
         this.password = password;
     }
 
-    public Account(String email, String password) {
-        this.email = email;
+    public Account(String name, String password) {
+        this.name = name;
         this.password = password;
     }
 
@@ -60,12 +60,12 @@ public class Account {
         this.ID = ID;
     }
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
