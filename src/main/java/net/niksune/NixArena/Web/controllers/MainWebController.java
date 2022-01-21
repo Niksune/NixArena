@@ -3,6 +3,7 @@ package net.niksune.NixArena.Web.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.niksune.NixArena.Web.Services.AccountService;
 import net.niksune.NixArena.Web.repositories.AccountRepositoryService;
 import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
@@ -29,21 +30,26 @@ public class MainWebController {
     @Autowired
     private AccountRepositoryService accountRepositoryService;
 
+    @Autowired
+    private AccountService accountService;
+
 
     /* ---------SCENARIOS--------- */
 
     @GetMapping("/mainScenario")
     public String mainScenario() {
 
-        Account nix = new Account("autre@gmail.com", "Autre");
+        Account nix = accountRepositoryInterface.findWeaponsStoredByID(5).get();//new Account("autre@gmail.com", "Autre");
+        /*
         Charac romeo = new Charac("Romeo");
         Weapon spear = new Weapon("Spear", 5);
         romeo.setWeaponEquipped(spear);
         nix.addCharacter(romeo);
-        Weapon rapier = new Weapon("Rapier", 3);
-        Weapon dagger = new Weapon("Dagger", 2);
-        nix.getWeaponsStored().add(rapier);
-        nix.getWeaponsStored().add(dagger);
+        */
+        Weapon w1 = new Weapon("Blade", 6);
+        Weapon w2 = new Weapon("Fan", 8);
+        nix.getWeaponsStored().add(w1);
+        nix.getWeaponsStored().add(w2);
         accountRepositoryInterface.save(nix);
         return ("Account added with one armed character and several weapons !");
     }
@@ -145,7 +151,6 @@ public class MainWebController {
 
 
     @PostMapping("/accounts/{id}/set-main")
-    // Just to remember that you can get several strings values with this syntax : public int setMainToAccount(@PathVariable("id") String id, @RequestBody String num, String other)
     public int setMainToAccount(@PathVariable("id") String id, @RequestBody String json) {
         Account account = accountRepositoryService.findCompleteByID(Integer.parseInt(id));
         ObjectMapper mapper = new ObjectMapper();
@@ -157,6 +162,25 @@ public class MainWebController {
             e.printStackTrace();
         }
         accountRepositoryInterface.save(account);
+        return 1;
+    }
+
+
+    @PostMapping("/accounts/{id}/equip-to")
+    public int equipWeaponToCharac(@PathVariable("id") String idAccount, @RequestBody String json) {
+
+        System.out.println(json);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = mapper.readTree(json);
+            int numChar = jsonNode.get("characterNumber").asInt();
+            int idWeapon = jsonNode.get("idWeapon").asInt();
+
+            accountService.assignCopyWeaponToChar(Integer.parseInt(idAccount),idWeapon,numChar);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return 1;
     }
 

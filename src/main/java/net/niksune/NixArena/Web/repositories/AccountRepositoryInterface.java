@@ -24,4 +24,7 @@ public interface AccountRepositoryInterface extends JpaRepository<Account,Intege
     @EntityGraph(value="graph.Account.onlyInfos",type= EntityGraph.EntityGraphType.FETCH)
     Optional<Account> findInfosByID(int ID);
 
+    @EntityGraph(value="graph.Account.weaponsStored",type= EntityGraph.EntityGraphType.FETCH)
+    Optional<Account> findWeaponsStoredByID(int ID);
+
 }
