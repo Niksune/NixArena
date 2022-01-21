@@ -1,6 +1,6 @@
 package net.niksune.NixArena.Web.controllers;
 
-import net.niksune.NixArena.Web.Services.AccountService;
+import net.niksune.NixArena.Web.repositories.AccountRepositoryService;
 import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
 import net.niksune.NixArena.Web.beans.Weapon;
@@ -24,7 +24,7 @@ public class MainWebController {
     private WeaponRepositoryInterface weaponRepositoryInterface;
 
     @Autowired
-    private AccountService accountService;
+    private AccountRepositoryService accountRepositoryService;
 
 
     /* ---------SCENARIOS--------- */
@@ -33,12 +33,33 @@ public class MainWebController {
     public String mainScenario() {
 
         Account nix = new Account("autre@gmail.com", "Autre");
-        Charac enzo = new Charac("Mathieu");
-        Weapon rapier = new Weapon("Spear", 5);
-        enzo.setWeaponEquipped(rapier);
-        nix.getCharacters().add(enzo);
+        Charac romeo = new Charac("Romeo");
+        Weapon spear = new Weapon("Spear", 5);
+        romeo.setWeaponEquipped(spear);
+        nix.addCharacter(romeo);
+        Weapon rapier = new Weapon("Rapier", 3);
+        Weapon dagger = new Weapon("Dagger", 2);
+        nix.getWeaponsStored().add(rapier);
+        nix.getWeaponsStored().add(dagger);
         accountRepositoryInterface.save(nix);
-        return ("Account added with one armed character !");
+        return ("Account added with one armed character and several weapons !");
+    }
+
+    @GetMapping("/checkRead")
+    public void checkRead() {
+
+        /*
+        Account acc = accountRepositoryService.findCompleteByID(13).get();
+        System.out.println(acc.getCharacs().size());
+        for (Charac c : acc.getCharacs()) {
+            System.out.println(c);
+        }
+        System.out.println(acc.getWeaponsStored().size());
+        for (Weapon w : acc.getWeaponsStored()) {
+            System.out.println(w);
+        }
+        */
+
     }
 
     @GetMapping("/makeWeapons")
@@ -52,9 +73,9 @@ public class MainWebController {
 
     /* ---------ACCOUNTS--------- */
 
-    @GetMapping("/allAccountsComplete")
-    public Iterable<Account> getAllAccountsComplete() {
-        return accountRepositoryInterface.findAllCompleteBy();
+    @GetMapping("/allAccountsAllCharacsWithEquippedWeapon")
+    public Iterable<Account> getAllAccountsAllCharacsWithEquippedWeapon() {
+        return accountRepositoryInterface.findAllCharacsWithEquippedWeaponBy();
     }
 
     @GetMapping("/allAccountsWithCharacs")
@@ -73,8 +94,8 @@ public class MainWebController {
     }
 
     @GetMapping("/accountComplete/{id}")
-    public Optional<Account> getAccountCompleteById(@PathVariable("id") String id) {
-        return accountRepositoryInterface.findCompleteByID(Integer.parseInt(id));
+    public Account getAccountCompleteById(@PathVariable("id") String id) {
+        return accountRepositoryService.findCompleteByID(Integer.parseInt(id));
     }
 
     // Others HTTP Requests
@@ -99,12 +120,22 @@ public class MainWebController {
         return characRepositoryInterface.findAll();
     }
 
+    @GetMapping("/allCharacsWithWeapon")
+    public Iterable<Charac> getAllCharacsWithWeapon() {
+        return characRepositoryInterface.findAllWithWeaponBy();
+    }
+
+    @GetMapping("/allCharacsWithOwner")
+    public Iterable<Charac> getAllCharacsWithOwner() {
+        return characRepositoryInterface.findAllWithOwnerBy();
+    }
+
     /* ---------INTERACTIONS--------- */
 
     @PostMapping("/accounts/{id}/add-charac")
-    public int addCharacToAccount(@PathVariable("id") String id,@RequestBody Charac charac) {
-        Account account = accountRepositoryInterface.findCompleteByID(Integer.parseInt(id)).get();
-        account.getCharacters().add(charac);
+    public int addCharacToAccount(@PathVariable("id") String id, @RequestBody Charac charac) {
+        Account account = accountRepositoryService.findCompleteByID(Integer.parseInt(id));
+        account.addCharacter(charac);
         accountRepositoryInterface.save(account);
         return 1;
     }

@@ -1,31 +1,41 @@
 package net.niksune.NixArena.Web.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
-@NamedEntityGraph(name = "graph.Account.characters",
-        attributeNodes = @NamedAttributeNode("characs"))
+@NamedEntityGraph(name = "graph.Account.characters", attributeNodes = @NamedAttributeNode("characs"))
 @NamedEntityGraph(name = "graph.Account.onlyInfos")
-@NamedEntityGraph(
-        name = "graph.Account.characAndWeapons",
-        attributeNodes = @NamedAttributeNode(value = "characs", subgraph = "Charac.weaponEquipped"),
-        subgraphs = {
-                @NamedSubgraph(name = "Charac.weaponEquipped",
-                        attributeNodes = @NamedAttributeNode(value = "weaponEquipped")) })
+@NamedEntityGraph(name = "graph.Account.characsWithEquippedWeapon", attributeNodes = @NamedAttributeNode(value = "characs", subgraph = "Charac.weaponEquipped"), subgraphs = {@NamedSubgraph(name = "Charac.weaponEquipped", attributeNodes = @NamedAttributeNode(value = "weaponEquipped"))})
+//@NamedEntityGraph(name = "graph.Account.complete", attributeNodes = {@NamedAttributeNode("weaponsStored"),@NamedAttributeNode(value = "characs", subgraph = "Charac.weaponEquipped")}, subgraphs = {@NamedSubgraph(name = "Charac.weaponEquipped", attributeNodes = @NamedAttributeNode(value = "weaponEquipped"))})
+
 public class Account {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID = 0;
     private String name;
     private String password;
-    @OneToMany(
-            fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    private int numberCharacSelected = -1;
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Charac> characs = new ArrayList<Charac>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Weapon> weaponsStored = new ArrayList<Weapon>();
+
+
+    private Charac getCharacSelected() {
+        return this.characs.get(numberCharacSelected);
+    }
+
+    public void addCharacter(Charac charac){
+        this.characs.add(charac);
+        charac.setOwnerAccount(this);
+    }
 
 
     public Account() {
@@ -33,12 +43,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" +
-                "ID=" + ID +
-                ", email='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", characs=" + characs +
-                '}';
+        return "Account{" + "ID=" + ID + ", email='" + name + '\'' + ", password='" + password + '\'' + ", characs=" + characs + '}';
     }
 
     public Account(int ID, String name, String password) {
@@ -50,6 +55,23 @@ public class Account {
     public Account(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+
+    public List<Weapon> getWeaponsStored() {
+        return weaponsStored;
+    }
+
+    public void setWeaponsStored(List<Weapon> weaponsStored) {
+        this.weaponsStored = weaponsStored;
+    }
+
+    public int getNumberCharacSelected() {
+        return numberCharacSelected;
+    }
+
+    public void setNumberCharacSelected(int numberCharacSelected) {
+        this.numberCharacSelected = numberCharacSelected;
     }
 
     public int getID() {
@@ -76,11 +98,11 @@ public class Account {
         this.password = password;
     }
 
-    public List<Charac> getCharacters() {
+    public List<Charac> getCharacs() {
         return characs;
     }
 
-    public void setCharacters(List<Charac> characs) {
+    public void setCharacs(List<Charac> characs) {
         this.characs = characs;
     }
 }

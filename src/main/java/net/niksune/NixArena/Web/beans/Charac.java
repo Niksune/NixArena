@@ -1,26 +1,38 @@
 package net.niksune.NixArena.Web.beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
+@NamedEntityGraph(name = "graph.Character.weapon", attributeNodes = @NamedAttributeNode("weaponEquipped"))
+@NamedEntityGraph(name = "graph.Character.owner", attributeNodes = @NamedAttributeNode("ownerAccount"))
 public class Charac {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     private String name;
-    private int XP = 0;
     private int level = 1;
     @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Weapon weaponEquipped = null;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_account_id")
+    //Prevent the circular (and infinite) call
+    //But I DON'T understand WHY the charac list is called "characters" in JSON and not "characs" like the property
+    // (after investigation) Holy S... That the name of the GETTERS AND SETTERS that matters for the name of json properties !?
+    // I started with the name "characters" and changed because of reserved keyword problem. I wasn't ready
+    @JsonIgnoreProperties("characs")
+    private Account ownerAccount;
+
 
     @Override
     public String toString() {
         return "Charac{" +
                 "ID=" + ID +
                 ", name='" + name + '\'' +
-                ", XP=" + XP +
                 ", level=" + level +
                 '}';
     }
@@ -35,6 +47,14 @@ public class Charac {
     public Charac(String name, int level) {
         this.name = name;
         this.level = level;
+    }
+
+    public void setOwnerAccount(Account ownerAccount) {
+        this.ownerAccount = ownerAccount;
+    }
+
+    public Account getOwnerAccount() {
+        return ownerAccount;
     }
 
     public Weapon getWeaponEquipped() {
@@ -59,14 +79,6 @@ public class Charac {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getXP() {
-        return XP;
-    }
-
-    public void setXP(int XP) {
-        this.XP = XP;
     }
 
     public int getLevel() {

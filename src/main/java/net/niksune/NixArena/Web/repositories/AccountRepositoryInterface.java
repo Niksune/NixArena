@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public interface AccountRepositoryInterface extends JpaRepository<Account,Integer> {
 
-    @EntityGraph(value="graph.Account.characAndWeapons",type= EntityGraph.EntityGraphType.FETCH)
-    List<Account> findAllCompleteBy();
+    @EntityGraph(value="graph.Account.characsWithEquippedWeapon",type= EntityGraph.EntityGraphType.FETCH)
+    List<Account> findAllCharacsWithEquippedWeaponBy();
 
     @EntityGraph(value="graph.Account.characters",type= EntityGraph.EntityGraphType.FETCH)
     List<Account> findAllWithCharacsBy();
@@ -18,8 +18,8 @@ public interface AccountRepositoryInterface extends JpaRepository<Account,Intege
     @EntityGraph(value="graph.Account.onlyInfos",type= EntityGraph.EntityGraphType.FETCH)
     List<Account> findAllInfosBy();
 
-    @EntityGraph(value="graph.Account.characAndWeapons",type= EntityGraph.EntityGraphType.FETCH)
-    Optional<Account> findCompleteByID(int ID);
+    //Implemented in AccountRepositoryService
+    //Optional<Account> findCompleteByID(int ID);
 
     @EntityGraph(value="graph.Account.onlyInfos",type= EntityGraph.EntityGraphType.FETCH)
     Optional<Account> findInfosByID(int ID);
