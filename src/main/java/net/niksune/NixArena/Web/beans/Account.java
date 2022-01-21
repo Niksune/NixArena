@@ -1,10 +1,6 @@
 package net.niksune.NixArena.Web.beans;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.*;
@@ -22,7 +18,8 @@ public class Account {
     private int ID = 0;
     private String name;
     private String password;
-    private int numberCharacSelected = -1;
+    @Column(columnDefinition = "int default -1")
+    private int numberMain = -1;
     @JsonProperty("characters")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Charac> characs = new ArrayList<>();
@@ -31,7 +28,7 @@ public class Account {
 
 
     private Charac getCharacSelected() {
-        return this.characs.get(numberCharacSelected);
+        return this.characs.get(numberMain);
     }
 
     public void addCharacter(Charac charac){
@@ -68,12 +65,12 @@ public class Account {
         this.weaponsStored = weaponsStored;
     }
 
-    public int getNumberCharacSelected() {
-        return numberCharacSelected;
+    public int getNumberMain() {
+        return numberMain;
     }
 
-    public void setNumberCharacSelected(int numberCharacSelected) {
-        this.numberCharacSelected = numberCharacSelected;
+    public void setNumberMain(int numberMain) {
+        this.numberMain = numberMain;
     }
 
     public int getID() {

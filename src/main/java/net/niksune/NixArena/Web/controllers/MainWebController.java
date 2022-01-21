@@ -1,5 +1,8 @@
 package net.niksune.NixArena.Web.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.niksune.NixArena.Web.repositories.AccountRepositoryService;
 import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
@@ -136,6 +139,23 @@ public class MainWebController {
     public int addCharacToAccount(@PathVariable("id") String id, @RequestBody Charac charac) {
         Account account = accountRepositoryService.findCompleteByID(Integer.parseInt(id));
         account.addCharacter(charac);
+        accountRepositoryInterface.save(account);
+        return 1;
+    }
+
+
+    @PostMapping("/accounts/{id}/set-main")
+    // Just to remember that you can get several strings values with this syntax : public int setMainToAccount(@PathVariable("id") String id, @RequestBody String num, String other)
+    public int setMainToAccount(@PathVariable("id") String id, @RequestBody String json) {
+        Account account = accountRepositoryService.findCompleteByID(Integer.parseInt(id));
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = mapper.readTree(json);
+            int num = jsonNode.get("num").asInt();
+            account.setNumberMain(num);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         accountRepositoryInterface.save(account);
         return 1;
     }
