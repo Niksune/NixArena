@@ -24,7 +24,8 @@ public class Charac {
     //But I DON'T understand WHY the charac list is called "characters" in JSON and not "characs" like the property
     // (after investigation) Holy S... That the name of the GETTERS AND SETTERS that matters for the name of json properties !?
     // I started with the name "characters" and changed because of reserved keyword problem. I wasn't ready
-    @JsonIgnoreProperties("characs")
+    // Now I changed the name back to characters but with a @JsonProperty
+    @JsonIgnoreProperties("characters")
     private Account ownerAccount;
 
 

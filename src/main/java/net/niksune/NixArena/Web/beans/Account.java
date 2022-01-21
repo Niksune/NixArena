@@ -2,6 +2,7 @@ package net.niksune.NixArena.Web.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -22,10 +23,11 @@ public class Account {
     private String name;
     private String password;
     private int numberCharacSelected = -1;
+    @JsonProperty("characters")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Charac> characs = new ArrayList<Charac>();
+    private List<Charac> characs = new ArrayList<>();
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Weapon> weaponsStored = new ArrayList<Weapon>();
+    private List<Weapon> weaponsStored = new ArrayList<>();
 
 
     private Charac getCharacSelected() {
