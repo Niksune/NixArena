@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 @RestController
 @CrossOrigin(origins = {"http://127.0.0.1:5500", "http://127.0.0.1:5500/actual-game/", "http://127.0.0.1:5500/general-management/"})
 public class MainWebController {
@@ -172,21 +173,22 @@ public class MainWebController {
 
 
     @PostMapping("/accounts/{id}/equip-to")
-    public int equipWeaponToCharac(@PathVariable("id") String idAccount, @RequestBody String json) {
+    public String equipWeaponToCharac(@PathVariable("id") String idAccount, @RequestBody String json) {
 
         System.out.println(json);
         ObjectMapper mapper = new ObjectMapper();
+        String result = "KO";
         try {
             JsonNode jsonNode = mapper.readTree(json);
             int numChar = jsonNode.get("characterNumber").asInt();
             int idWeapon = jsonNode.get("idWeapon").asInt();
 
-            accountRepositoryService.assignCopyWeaponToChar(Integer.parseInt(idAccount),idWeapon,numChar);
+            result = accountRepositoryService.assignWeaponToChar(Integer.parseInt(idAccount),idWeapon,numChar);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return 1;
+        return result;
     }
 
 

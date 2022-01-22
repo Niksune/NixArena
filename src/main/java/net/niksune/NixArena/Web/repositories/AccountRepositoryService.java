@@ -3,8 +3,6 @@ package net.niksune.NixArena.Web.repositories;
 
 import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Weapon;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +20,7 @@ public class AccountRepositoryService {
     //This method is needed because Hibernate cannot autoload several lists
     //I found the solution of using a set instead of the second list
     //But 1/I want a list, 2/I add a problem : the list loaded the same number of items than in the set, even if in the DB it wasn't the same number
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     @Transactional
     public Account findCompleteByID(int ID) {
 
@@ -40,25 +39,33 @@ public class AccountRepositoryService {
     }
 
     @Transactional
-    public void assignCopyWeaponToChar(int idAccount, int weaponID, int numChar){
+    public String assignWeaponToChar(int idAccount, int weaponID, int numChar){
 
         Account account = accountRepositoryInterface.getById(idAccount);
         Weapon weaponToSwap = weaponRepositoryInterface.getById(weaponID);
 
-        //Removes the weapon from the weaponsStored
-        for(int i=0;i<account.getWeaponsStored().size();i++)
-            if(account.getWeaponsStored().get(i).getID() == weaponID)
-            {
-                account.getWeaponsStored().remove(i);
-                break;
-            }
+        if(account.getCharacs().get(numChar).getLevel()>=weaponToSwap.getLevel()) {
 
-        //If the character has a weapon, puts it in the weaponsStored
-        if(account.getCharacs().get(numChar) != null)
-            account.getWeaponsStored().add(account.getCharacs().get(numChar).getWeaponEquipped());
+            //Removes the weapon from the weaponsStored
+            for (int i = 0; i < account.getWeaponsStored().size(); i++)
+                if (account.getWeaponsStored().get(i).getID() == weaponID) {
+                    account.getWeaponsStored().remove(i);
+                    break;
+                }
 
-        //Assign the weapon to character
-        account.getCharacs().get(numChar).setWeaponEquipped(weaponToSwap);
+            //If the character has a weapon, puts it in the weaponsStored
+            if (account.getCharacs().get(numChar) != null)
+                account.getWeaponsStored().add(account.getCharacs().get(numChar).getWeaponEquipped());
+
+            //Assign the weapon to character
+            account.getCharacs().get(numChar).setWeaponEquipped(weaponToSwap);
+
+            return "OK";
+        }
+        else
+        {
+            return "LevelTooLow";
+        }
 
     }
 
