@@ -28,9 +28,16 @@ public class Charac {
     // Now I changed the name back to characters but with a @JsonProperty
     @JsonIgnoreProperties("characters")
     private Account ownerAccount;
+    private int totalAttack = 10;
 
-    public int getTotalAttack(){
-        return this.level*10 + this.getWeaponEquipped().getAttack();
+    public void setWeaponEquipped(Weapon weaponEquipped) {
+        this.weaponEquipped = weaponEquipped;
+        this.totalAttack = 10*this.level + weaponEquipped.getAttack();
+    }
+
+    public void levelUp(){
+        this.level++;
+        this.totalAttack += 10;
     }
 
     @Override
@@ -52,6 +59,15 @@ public class Charac {
     public Charac(String name, int level) {
         this.name = name;
         this.level = level;
+        this.totalAttack = 10*level;
+    }
+
+    public int getTotalAttack() {
+        return totalAttack;
+    }
+
+    public void setTotalAttack(int totalAttack) {
+        this.totalAttack = totalAttack;
     }
 
     public void setOwnerAccount(Account ownerAccount) {
@@ -64,10 +80,6 @@ public class Charac {
 
     public Weapon getWeaponEquipped() {
         return weaponEquipped;
-    }
-
-    public void setWeaponEquipped(Weapon weaponEquipped) {
-        this.weaponEquipped = weaponEquipped;
     }
 
     public int getID() {

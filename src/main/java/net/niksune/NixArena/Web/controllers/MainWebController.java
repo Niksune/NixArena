@@ -35,7 +35,7 @@ public class MainWebController {
     @GetMapping("/mainScenario")
     public String mainScenario() {
 
-        Account nix = accountRepositoryInterface.findWeaponsStoredByID(5).get();//new Account("autre@gmail.com", "Autre");
+        Account nix = accountRepositoryInterface.findWithWeaponsStoredByID(5).get();//new Account("autre@gmail.com", "Autre");
         /*
         Charac romeo = new Charac("Romeo");
         Weapon spear = new Weapon("Spear", 5);
@@ -115,6 +115,24 @@ public class MainWebController {
     @DeleteMapping("/accounts/{id}")
     public int deleteAccountById(@PathVariable("id") String id) {
         accountRepositoryInterface.deleteById(Integer.parseInt(id));
+        return 1;
+    }
+
+    @DeleteMapping("/accounts/{idAccount}/weapons")
+    public int deleteStoredWeapon(@PathVariable("idAccount") String idAccount,@RequestBody String json) {
+
+        Account account = accountRepositoryInterface.findWithWeaponsStoredByID(Integer.parseInt(idAccount)).get();
+
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            JsonNode jsonNode = mapper.readTree(json);
+            int numberWeapon = jsonNode.get("numberWeapon").asInt();
+            account.getWeaponsStored().remove(numberWeapon);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        accountRepositoryInterface.save(account);
+
         return 1;
     }
 
