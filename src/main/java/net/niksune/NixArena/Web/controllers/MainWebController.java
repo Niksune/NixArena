@@ -3,7 +3,6 @@ package net.niksune.NixArena.Web.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.niksune.NixArena.Web.Services.AccountService;
 import net.niksune.NixArena.Web.repositories.AccountRepositoryService;
 import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
@@ -29,9 +28,6 @@ public class MainWebController {
 
     @Autowired
     private AccountRepositoryService accountRepositoryService;
-
-    @Autowired
-    private AccountService accountService;
 
 
     /* ---------SCENARIOS--------- */
@@ -176,7 +172,7 @@ public class MainWebController {
             int numChar = jsonNode.get("characterNumber").asInt();
             int idWeapon = jsonNode.get("idWeapon").asInt();
 
-            accountService.assignCopyWeaponToChar(Integer.parseInt(idAccount),idWeapon,numChar);
+            accountRepositoryService.assignCopyWeaponToChar(Integer.parseInt(idAccount),idWeapon,numChar);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
