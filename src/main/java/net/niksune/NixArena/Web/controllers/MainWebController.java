@@ -3,13 +3,10 @@ package net.niksune.NixArena.Web.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.niksune.NixArena.Web.repositories.AccountRepositoryService;
+import net.niksune.NixArena.Web.repositories.*;
 import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
 import net.niksune.NixArena.Web.beans.Weapon;
-import net.niksune.NixArena.Web.repositories.AccountRepositoryInterface;
-import net.niksune.NixArena.Web.repositories.CharacRepositoryInterface;
-import net.niksune.NixArena.Web.repositories.WeaponRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +25,8 @@ public class MainWebController {
 
     @Autowired
     private AccountRepositoryService accountRepositoryService;
+    @Autowired
+    private CharacRepositoryService characRepositoryService;
 
 
     /* ---------SCENARIOS--------- */
@@ -133,6 +132,16 @@ public class MainWebController {
     @GetMapping("/allCharacsWithOwner")
     public Iterable<Charac> getAllCharacsWithOwner() {
         return characRepositoryInterface.findAllWithOwnerBy();
+    }
+
+    // Others HTTP Requests
+
+    @DeleteMapping("/characs/{id}")
+    public int deleteCharacById(@PathVariable("id") String id) {
+
+        characRepositoryService.destroyCharacAndRetrieveWeapon(Integer.parseInt(id));
+
+        return 1;
     }
 
     /* ---------INTERACTIONS--------- */

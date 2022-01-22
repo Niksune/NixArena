@@ -1,6 +1,5 @@
 package net.niksune.NixArena.Web.repositories;
 
-import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +13,8 @@ public interface CharacRepositoryInterface extends JpaRepository<Charac,Integer>
 
     @EntityGraph(value="graph.Character.owner",type= EntityGraph.EntityGraphType.FETCH)
     List<Charac> findAllWithOwnerBy();
+
+    @EntityGraph(value="graph.Character.complete",type= EntityGraph.EntityGraphType.FETCH)
+    Charac findCompleteByID(int ID);
 
 }

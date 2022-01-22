@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @NamedEntityGraph(name = "graph.Character.weapon", attributeNodes = @NamedAttributeNode("weaponEquipped"))
 @NamedEntityGraph(name = "graph.Character.owner", attributeNodes = @NamedAttributeNode("ownerAccount"))
+@NamedEntityGraph(name = "graph.Character.complete", attributeNodes = {@NamedAttributeNode("ownerAccount"),@NamedAttributeNode("weaponEquipped")})
 public class Charac {
 
     @Id
