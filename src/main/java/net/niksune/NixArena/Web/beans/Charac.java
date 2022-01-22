@@ -29,6 +29,9 @@ public class Charac {
     @JsonIgnoreProperties("characters")
     private Account ownerAccount;
 
+    public int getTotalAttack(){
+        return this.level*10 + this.getWeaponEquipped().getAttack();
+    }
 
     @Override
     public String toString() {
