@@ -1,4 +1,4 @@
-package net.niksune.NixArena.Web.Services;
+package net.niksune.NixArena.Web.services;
 
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package net.niksune.NixArena.Web.beans;
 
-import net.niksune.NixArena.Web.Services.WeaponService;
+import net.niksune.NixArena.Web.services.WeaponService;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
