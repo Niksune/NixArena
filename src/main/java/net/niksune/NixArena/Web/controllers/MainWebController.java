@@ -7,6 +7,7 @@ import net.niksune.NixArena.Web.repositories.*;
 import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
 import net.niksune.NixArena.Web.beans.Weapon;
+import net.niksune.NixArena.Web.services.FightOrganizerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,9 @@ public class MainWebController {
     private AccountRepositoryService accountRepositoryService;
     @Autowired
     private CharacRepositoryService characRepositoryService;
+
+    @Autowired
+    private FightOrganizerService fightOrganizerService;
 
 
     /* ---------SCENARIOS--------- */
@@ -76,6 +80,7 @@ public class MainWebController {
         return ("Weapons Created");
     }
 
+
     /* ---------ACCOUNTS--------- */
 
     @GetMapping("/allAccountsAllCharacsWithEquippedWeapon")
@@ -119,7 +124,7 @@ public class MainWebController {
     }
 
     @DeleteMapping("/accounts/{idAccount}/weapons")
-    public int deleteStoredWeapon(@PathVariable("idAccount") String idAccount,@RequestBody String json) {
+    public int deleteStoredWeapon(@PathVariable("idAccount") String idAccount, @RequestBody String json) {
 
         Account account = accountRepositoryInterface.findWithWeaponsStoredByID(Integer.parseInt(idAccount)).get();
 
@@ -135,6 +140,7 @@ public class MainWebController {
 
         return 1;
     }
+
 
     /* ---------CHARACS--------- */
 
@@ -153,6 +159,11 @@ public class MainWebController {
         return characRepositoryInterface.findAllWithOwnerBy();
     }
 
+    @GetMapping("/allCharacsWithFightingreports")
+    public Iterable<Charac> getAllCharacsWithFightingreports() {
+        return characRepositoryService.findAllWithFightingreportsBy();
+    }
+
     // Others HTTP Requests
 
     @DeleteMapping("/characs/{id}")
@@ -162,6 +173,7 @@ public class MainWebController {
 
         return 1;
     }
+
 
     /* ---------INTERACTIONS--------- */
 
@@ -184,7 +196,7 @@ public class MainWebController {
             int numChar = jsonNode.get("characterNumber").asInt();
             int idWeapon = jsonNode.get("idWeapon").asInt();
 
-            result = accountRepositoryService.assignWeaponToChar(Integer.parseInt(idAccount),idWeapon,numChar);
+            result = accountRepositoryService.assignWeaponToChar(Integer.parseInt(idAccount), idWeapon, numChar);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -193,10 +205,19 @@ public class MainWebController {
     }
 
     @PatchMapping("disarm-charac/{idCharacter}")
-    public String disarmCharac( @PathVariable("idCharacter") String idCharacter) {
+    public String disarmCharac(@PathVariable("idCharacter") String idCharacter) {
 
         return accountRepositoryService.disarmCharac(Integer.parseInt(idCharacter));
     }
 
+
+    /* ---------FULL SERVER SIDE--------- */
+
+    @GetMapping("fight-round")
+    public int fightRound() {
+
+        return fightOrganizerService.allFights();
+
+    }
 
 }

@@ -3,10 +3,13 @@ package net.niksune.NixArena.Web.repositories;
 
 import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
+import net.niksune.NixArena.Web.beans.FightingReport;
 import net.niksune.NixArena.Web.beans.Weapon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class CharacRepositoryService {
@@ -32,5 +35,16 @@ public class CharacRepositoryService {
         characRepositoryInterface.deleteById(idCharac);
 
     }
+
+    @Transactional
+    public List<Charac> findAllWithFightingreportsBy() {
+
+        List<Charac> characs = characRepositoryInterface.findAll();
+
+        characs.forEach(charac -> {charac.getFightingReports().forEach(fightingReport -> {fightingReport.getAttacks().forEach(Integer::intValue);});});
+
+        return characs;
+    }
+
 
 }

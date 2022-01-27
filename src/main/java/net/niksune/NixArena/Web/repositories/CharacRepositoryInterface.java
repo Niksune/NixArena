@@ -13,6 +13,11 @@ public interface CharacRepositoryInterface extends JpaRepository<Charac,Integer>
 
     @EntityGraph(value="graph.Character.owner",type= EntityGraph.EntityGraphType.FETCH)
     List<Charac> findAllWithOwnerBy();
+/*
+    @EntityGraph(value="graph.Character.fightingReports",type= EntityGraph.EntityGraphType.FETCH)
+    List<Charac> findAllWithFightingreportsBy();
+*/
+    List<Charac> findAllByOrderByLevelAsc();
 
     @EntityGraph(value="graph.Character.complete",type= EntityGraph.EntityGraphType.FETCH)
     Charac findCompleteByID(int ID);

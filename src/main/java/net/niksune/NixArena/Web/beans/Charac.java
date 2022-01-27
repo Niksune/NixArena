@@ -1,14 +1,17 @@
 package net.niksune.NixArena.Web.beans;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NamedEntityGraph(name = "graph.Character.weapon", attributeNodes = @NamedAttributeNode("weaponEquipped"))
 @NamedEntityGraph(name = "graph.Character.owner", attributeNodes = @NamedAttributeNode("ownerAccount"))
-@NamedEntityGraph(name = "graph.Character.complete", attributeNodes = {@NamedAttributeNode("ownerAccount"),@NamedAttributeNode("weaponEquipped")})
+@NamedEntityGraph(name = "graph.Character.complete", attributeNodes = {@NamedAttributeNode("ownerAccount"), @NamedAttributeNode("weaponEquipped")})
+//@NamedEntityGraph(name = "graph.Character.fightingReports", attributeNodes = @NamedAttributeNode("fightingReports"))
+//@NamedEntityGraph(name = "graph.Character.fightingReports", attributeNodes = @NamedAttributeNode(value = "fightingReports", subgraph = "FightingReport.attacks"), subgraphs = {@NamedSubgraph(name = "FightingReport.attacks", attributeNodes = @NamedAttributeNode(value = "attacks"))})
 public class Charac {
 
     @Id
@@ -29,15 +32,18 @@ public class Charac {
     @JsonIgnoreProperties("characters")
     private Account ownerAccount;
     private int totalAttack = 10;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private List<FightingReport> fightingReports = new ArrayList<FightingReport>();
 
     public void setWeaponEquipped(Weapon weaponToEquip) {
-        this.totalAttack = 10*this.level;
-        if(weaponToEquip != null)
+        this.totalAttack = 10 * this.level;
+        if (weaponToEquip != null)
             this.totalAttack += weaponToEquip.getAttack();
         this.weaponEquipped = weaponToEquip;
     }
 
-    public void levelUp(){
+    public void levelUp() {
         this.level++;
         this.totalAttack += 10;
     }
@@ -61,7 +67,11 @@ public class Charac {
     public Charac(String name, int level) {
         this.name = name;
         this.level = level;
-        this.totalAttack = 10*level;
+        this.totalAttack = 10 * level;
+    }
+
+    public List<FightingReport> getFightingReports() {
+        return fightingReports;
     }
 
     public int getTotalAttack() {
