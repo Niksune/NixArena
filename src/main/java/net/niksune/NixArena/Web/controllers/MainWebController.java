@@ -173,7 +173,7 @@ public class MainWebController {
         return 1;
     }
 
-    @PostMapping("/accounts/{id}/equip-to")
+    @PatchMapping("/accounts/{id}/equip-to")
     public String equipWeaponToCharac(@PathVariable("id") String idAccount, @RequestBody String json) {
 
         System.out.println(json);
@@ -192,7 +192,7 @@ public class MainWebController {
         return result;
     }
 
-    @PostMapping("disarm-charac/{idCharacter}")
+    @PatchMapping("disarm-charac/{idCharacter}")
     public String disarmCharac( @PathVariable("idCharacter") String idCharacter) {
 
         return accountRepositoryService.disarmCharac(Integer.parseInt(idCharacter));
