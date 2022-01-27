@@ -2,6 +2,7 @@ package net.niksune.NixArena.Web.repositories;
 
 
 import net.niksune.NixArena.Web.beans.Account;
+import net.niksune.NixArena.Web.beans.Charac;
 import net.niksune.NixArena.Web.beans.Weapon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,8 @@ public class AccountRepositoryService {
 
     @Autowired
     private AccountRepositoryInterface accountRepositoryInterface;
-
+    @Autowired
+    private CharacRepositoryInterface characRepositoryInterface;
     @Autowired
     private WeaponRepositoryInterface weaponRepositoryInterface;
 
@@ -66,6 +68,23 @@ public class AccountRepositoryService {
         {
             return "LevelTooLow";
         }
+
+    }
+
+    @Transactional
+    public String disarmCharac(int idCharac){
+
+        Charac charac = characRepositoryInterface.getById(idCharac);
+        Account account = charac.getOwnerAccount();
+        if(charac.getWeaponEquipped() == null)
+            return "NoWeaponEquipped";
+        Weapon weaponToRemove = charac.getWeaponEquipped();
+
+        account.getWeaponsStored().add(weaponToRemove);
+
+        charac.setWeaponEquipped(null);
+
+        return "OK";
 
     }
 

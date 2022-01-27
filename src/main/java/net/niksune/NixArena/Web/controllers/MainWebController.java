@@ -192,5 +192,11 @@ public class MainWebController {
         return result;
     }
 
+    @PostMapping("disarm-charac/{idCharacter}")
+    public String disarmCharac( @PathVariable("idCharacter") String idCharacter) {
+
+        return accountRepositoryService.disarmCharac(Integer.parseInt(idCharacter));
+    }
+
 
 }

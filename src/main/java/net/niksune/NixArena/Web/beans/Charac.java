@@ -30,9 +30,11 @@ public class Charac {
     private Account ownerAccount;
     private int totalAttack = 10;
 
-    public void setWeaponEquipped(Weapon weaponEquipped) {
-        this.weaponEquipped = weaponEquipped;
-        this.totalAttack = 10*this.level + weaponEquipped.getAttack();
+    public void setWeaponEquipped(Weapon weaponToEquip) {
+        this.totalAttack = 10*this.level;
+        if(weaponToEquip != null)
+            this.totalAttack += weaponToEquip.getAttack();
+        this.weaponEquipped = weaponToEquip;
     }
 
     public void levelUp(){
