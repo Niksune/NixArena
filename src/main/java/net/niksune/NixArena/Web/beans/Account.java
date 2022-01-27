@@ -10,6 +10,7 @@ import java.util.*;
 @NamedEntityGraph(name = "graph.Account.onlyInfos")
 @NamedEntityGraph(name = "graph.Account.characsWithEquippedWeapon", attributeNodes = @NamedAttributeNode(value = "characs", subgraph = "Charac.weaponEquipped"), subgraphs = {@NamedSubgraph(name = "Charac.weaponEquipped", attributeNodes = @NamedAttributeNode(value = "weaponEquipped"))})
 @NamedEntityGraph(name = "graph.Account.weaponsStored", attributeNodes = @NamedAttributeNode("weaponsStored"))
+//Removed because of Hibernate cannot load two lists. If both lists are needed loading is done by @Transactional methods
 //@NamedEntityGraph(name = "graph.Account.complete", attributeNodes = {@NamedAttributeNode("weaponsStored"),@NamedAttributeNode(value = "characs", subgraph = "Charac.weaponEquipped")}, subgraphs = {@NamedSubgraph(name = "Charac.weaponEquipped", attributeNodes = @NamedAttributeNode(value = "weaponEquipped"))})
 
 public class Account {
@@ -19,18 +20,12 @@ public class Account {
     private int ID = 0;
     private String name;
     private String password;
-    @Column(columnDefinition = "int default -1")
-    private int numberMain = -1;
     @JsonProperty("characters")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Charac> characs = new ArrayList<>();
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Weapon> weaponsStored = new ArrayList<>();
 
-
-    private Charac getCharacSelected() {
-        return this.characs.get(numberMain);
-    }
 
     public void addCharacter(Charac charac){
         this.characs.add(charac);
@@ -64,14 +59,6 @@ public class Account {
 
     public void setWeaponsStored(List<Weapon> weaponsStored) {
         this.weaponsStored = weaponsStored;
-    }
-
-    public int getNumberMain() {
-        return numberMain;
-    }
-
-    public void setNumberMain(int numberMain) {
-        this.numberMain = numberMain;
     }
 
     public int getID() {

@@ -173,23 +173,6 @@ public class MainWebController {
         return 1;
     }
 
-
-    @PostMapping("/accounts/{id}/set-main")
-    public int setMainToAccount(@PathVariable("id") String id, @RequestBody String json) {
-        Account account = accountRepositoryService.findCompleteByID(Integer.parseInt(id));
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            JsonNode jsonNode = mapper.readTree(json);
-            int num = jsonNode.get("num").asInt();
-            account.setNumberMain(num);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        accountRepositoryInterface.save(account);
-        return 1;
-    }
-
-
     @PostMapping("/accounts/{id}/equip-to")
     public String equipWeaponToCharac(@PathVariable("id") String idAccount, @RequestBody String json) {
 
