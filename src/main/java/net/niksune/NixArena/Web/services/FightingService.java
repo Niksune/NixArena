@@ -50,7 +50,7 @@ public class FightingService {
         if (charac2HP <= 0) {
             return 1;
         } else
-            return 0;
+            return 2;
 
     }
 
