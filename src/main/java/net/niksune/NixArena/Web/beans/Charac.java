@@ -11,7 +11,6 @@ import java.util.List;
 @NamedEntityGraph(name = "graph.Character.owner", attributeNodes = @NamedAttributeNode("ownerAccount"))
 @NamedEntityGraph(name = "graph.Character.complete", attributeNodes = {@NamedAttributeNode("ownerAccount"), @NamedAttributeNode("weaponEquipped")})
 //@NamedEntityGraph(name = "graph.Character.fightingReports", attributeNodes = @NamedAttributeNode("fightingReports"))
-//@NamedEntityGraph(name = "graph.Character.fightingReports", attributeNodes = @NamedAttributeNode(value = "fightingReports", subgraph = "FightingReport.attacks"), subgraphs = {@NamedSubgraph(name = "FightingReport.attacks", attributeNodes = @NamedAttributeNode(value = "attacks"))})
 public class Charac {
 
     @Id
@@ -34,7 +33,7 @@ public class Charac {
     private int totalAttack = 10;
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private List<FightingReport> fightingReports = new ArrayList<FightingReport>();
+    private List<FightingReport> fightingReports = new ArrayList<>();
 
     public void setWeaponEquipped(Weapon weaponToEquip) {
         this.totalAttack = 10 * this.level;

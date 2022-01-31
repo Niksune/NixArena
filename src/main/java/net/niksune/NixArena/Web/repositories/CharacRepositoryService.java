@@ -46,5 +46,21 @@ public class CharacRepositoryService {
         return characs;
     }
 
+    @Transactional
+    public Charac findWith5LastFightingreportsById(int idCharac) {
+
+        Charac charac = characRepositoryInterface.findById(idCharac).get();
+
+        int numberOfFightingReports = charac.getFightingReports().size();
+
+        if(numberOfFightingReports > 5)
+            numberOfFightingReports = 5;
+
+        for(int i = 0; i < numberOfFightingReports; i++)
+            charac.getFightingReports().forEach(fightingReport -> {fightingReport.getAttacks().forEach(Integer::intValue);});
+
+        return charac;
+    }
+
 
 }

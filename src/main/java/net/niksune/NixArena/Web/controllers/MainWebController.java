@@ -164,6 +164,11 @@ public class MainWebController {
         return characRepositoryService.findAllWithFightingreportsBy();
     }
 
+    @GetMapping("/charac/{id}/5lastfightingreports")
+    public Charac getCharacWith5LastFightingreportsById(@PathVariable("id") String id) {
+        return characRepositoryService.findWith5LastFightingreportsById(Integer.parseInt(id));
+    }
+
     // Others HTTP Requests
 
     @DeleteMapping("/characs/{id}")
