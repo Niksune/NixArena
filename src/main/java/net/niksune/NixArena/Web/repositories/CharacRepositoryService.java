@@ -1,10 +1,7 @@
 package net.niksune.NixArena.Web.repositories;
 
 
-import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
-import net.niksune.NixArena.Web.beans.FightingReport;
-import net.niksune.NixArena.Web.beans.Weapon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +44,7 @@ public class CharacRepositoryService {
     }
 
     @Transactional
-    public Charac findWith5LastFightingreportsById(int idCharac) {
+    public Charac findWithFightingreportsById(int idCharac) {
 
         Charac charac = characRepositoryInterface.findById(idCharac).get();
 
