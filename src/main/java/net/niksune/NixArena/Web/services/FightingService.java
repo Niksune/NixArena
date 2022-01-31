@@ -55,7 +55,7 @@ public class FightingService {
     }
 
     public int attackCalculation(Charac charac) {
-        return ThreadLocalRandom.current().nextInt(0, charac.getTotalAttack() + 1);
+        return ThreadLocalRandom.current().nextInt(charac.getLevel(), charac.getTotalAttack() + 1);
     }
 
     public FightingReport initializeFightingReport(Charac charac1, Charac charac2) {
