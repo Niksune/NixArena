@@ -67,7 +67,7 @@ public class FightOrganizerService {
 
     public void victoryOutLevel(Charac charac){
         //Gets the just made fighting report
-        charac.getFightingReports().get(charac.getFightingReports().size()-1).setSpecialText("Your character defeated a less leveled character, so it didn't leveled up and you got a potentaty more powered weapon");
+        charac.getFightingReports().get(charac.getFightingReports().size()-1).setSpecialText("OverLevel");
         charac.getOwnerAccount().getWeaponsStored().add(WeaponService.newWeapon(charac.getLevel()+5));
         characRepositoryInterface.save(charac);
 
@@ -79,7 +79,7 @@ public class FightOrganizerService {
     }
 
     public void soloChar(Charac charac){
-        FightingReport fightingReport = new FightingReport("No luck. Your character was alone");
+        FightingReport fightingReport = new FightingReport("Alone");
         charac.getFightingReports().add(fightingReport);
 
         lose(charac);
