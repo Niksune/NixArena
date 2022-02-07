@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nix Arena</title>
+    <style>
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      td {
+        width: 100px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Manage Account</h1>
+    <h3>Return to <a id="accountLink">Account Management</a></h3>
+    <h3>Fight History of <span id="name"></span></h3>
+    <div id="character"></div>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      if (!urlParams.has("IDaccount")) {
+        window.location.href = "/index.html";
+      }
+      if (!urlParams.has("IDcharacter")) {
+        window.location.href = "/index.html";
+      }
+
+      const IDAccount = urlParams.get("IDaccount");
+      const IDCharacter = urlParams.get("IDcharacter");
+
+      function loadCharacter() {
+        $.get(
+          "http://localhost:8080/charac/" +
+            IDCharacter +
+            "/fightingreports",
+          function (character, status) {
+            console.log(character);
+
+            $("#accountLink").attr(
+              "href",
+              "manage_account.html?IDaccount=" + IDAccount
+            );
+
+            $("#name").text(character.name);
+
+            let result = "";
+
+            if (character.fightingReports.length == 0)
+              result =
+                "This character has not fighted yet. Wait for the next hour !";
+            else {
+              for(let f=character.fightingReports.length-1;(f>=0 && f>=character.fightingReports.length-5);f--){
+                fight = character.fightingReports[f];
+                if (fight.specialText == "Alone")
+                  result +=
+                    "<div><b>No luck, your character was alone. A consolation weapon were granted to you.</b></div><br>";
+                else {
+                  if (fight.specialText == "OverLevel")
+                  result +=
+                    "<div><b>Your character outleveled his opponent, he didn't gained a level but got a chance to get an overpowered weapon.</b></div><br>";
+                  char1HP = fight.charac1Level * 100;
+                  char2HP = fight.charac2Level * 100;
+                  char1TotalAttack =
+                    fight.weaponCharac1Attack + fight.charac1Level * 10;
+                  char2TotalAttack =
+                    fight.weaponCharac2Attack + fight.charac2Level * 10;
+                  result += "<table>";
+                  result +=
+                    "<tr><th>" +
+                    fight.charac1Name +
+                    "</th><th>VS</th><th>" +
+                    fight.charac2Name +
+                    "</th></tr>";
+                  result +=
+                    "<tr><td>" +
+                    fight.charac1Level +
+                    "</td><td>Level</td><td>" +
+                    fight.charac2Level +
+                    "</td></tr>";
+                  result +=
+                    "<tr><td>" +
+                    fight.weaponCharac1Name +
+                    "</th><td>Weapon Name</td><td>" +
+                    fight.weaponCharac2Name +
+                    "</td></tr>";
+                  result +=
+                    "<tr><td>" +
+                    fight.weaponCharac1Attack +
+                    "</th><td>Weapon Attack</td><td>" +
+                    fight.weaponCharac2Attack +
+                    "</td></tr>";
+                  result +=
+                    "<tr><td>" +
+                    char1TotalAttack +
+                    "</th><td>Max Attack</td><td>" +
+                    char2TotalAttack +
+                    "</td></tr>";
+                  result +=
+                    "<tr><td>" +
+                    char1HP +
+                    "</th><td>Starting HP</td><td>" +
+                    char2HP +
+                    "</td></tr>";
+                  for (let i = 0; i < fight.attacks.length; i++) {
+                    if (i % 2 == 0) {
+                      char2HP -= fight.attacks[i];
+                      if (char2HP <= 0) char2HP = "DEFEATED";
+                      result +=
+                        "<tr><td>" +
+                        char1HP +
+                        "</th><td> => " +
+                        fight.attacks[i] +
+                        " => </td><td>" +
+                        char2HP +
+                        "</td></tr>";
+                    } else {
+                      char1HP -= fight.attacks[i];
+                      if (char1HP <= 0) char1HP = "DEFEATED";
+                      result +=
+                        "<tr><td>" +
+                        char1HP +
+                        "</th><td> <= " +
+                        fight.attacks[i] +
+                        " <= </td><td>" +
+                        char2HP +
+                        "</td></tr>";
+                    }
+                  }
+
+                  result += "</table><br>";
+                }
+              }
+            }
+            $("#character").html(result);
+          }
+        );
+      }
+
+      $(document).ready(function () {
+        loadCharacter();
+      });
+    </script>
+  </body>
+</html>
