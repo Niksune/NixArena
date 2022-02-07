@@ -12,12 +12,14 @@
 	<artifactId>NixArena-Web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>NixArena-Web</name>
+	<packaging>war</packaging>
 	<description>Spring + Hibernate Training Project </description>
 	<properties>
 		<java.version>11</java.version>
+		<tomcat.version>9.0.58</tomcat.version>
 	</properties>
-	<dependencies>
 
+	<dependencies>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -39,17 +41,23 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Provides the crappy solution to manage lazy fetch -->
+		<!-- Provides the nullable props to manage lazy fetch -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-hibernate5</artifactId>
 		</dependency>
+
+<!--		PROD-->
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--			<scope>provided</scope>-->
+<!--		</dependency>-->
 	</dependencies>
 
 
-
-
 	<build>
+		<finalName>NixArenaBack</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

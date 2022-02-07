@@ -39,13 +39,13 @@ public class MainWebController {
     @GetMapping("/mainScenario")
     public String mainScenario() {
 
-        Account nix = accountRepositoryInterface.findWithWeaponsStoredByID(5).get();//new Account("autre@gmail.com", "Autre");
-        /*
+        Account nix = new Account("Nix","badada");
+
         Charac romeo = new Charac("Romeo");
         Weapon spear = new Weapon("Spear", 5);
         romeo.setWeaponEquipped(spear);
         nix.addCharacter(romeo);
-        */
+
         Weapon w1 = new Weapon("Blade", 6);
         Weapon w2 = new Weapon("Fan", 8);
         nix.getWeaponsStored().add(w1);
@@ -185,6 +185,8 @@ public class MainWebController {
     @PostMapping("/accounts/{id}/add-charac")
     public int addCharacToAccount(@PathVariable("id") String id, @RequestBody Charac charac) {
         Account account = accountRepositoryService.findCompleteByID(Integer.parseInt(id));
+        //if(account.getCharacs().size()>3)
+        //    return
         account.addCharacter(charac);
         accountRepositoryInterface.save(account);
         return 1;
