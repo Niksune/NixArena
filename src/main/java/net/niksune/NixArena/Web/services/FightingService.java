@@ -59,7 +59,7 @@ public class FightingService {
     }
 
     public FightingReport initializeFightingReport(Charac charac1, Charac charac2) {
-        FightingReport fightingReport = new FightingReport(charac1, charac2, charac1.getName(), charac2.getName(), charac1.getLevel(), charac2.getLevel());
+        FightingReport fightingReport = new FightingReport(charac1.getID(), charac2.getID(), charac1.getName(), charac2.getName(), charac1.getLevel(), charac2.getLevel());
 
         if (charac1.getWeaponEquipped() != null) {
             fightingReport.setWeaponCharac1Name(charac1.getWeaponEquipped().getName());

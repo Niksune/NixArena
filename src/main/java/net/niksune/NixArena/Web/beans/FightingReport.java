@@ -18,12 +18,8 @@ public class FightingReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID = 0;
     private String specialText;
-    @JsonIgnore
-    @ManyToOne
-    private Charac charac1;
-    @JsonIgnore
-    @ManyToOne
-    private Charac charac2;
+    private int charac1ID;
+    private int charac2ID;
     private String charac1Name;
     private String charac2Name;
     private int charac1Level;
@@ -33,11 +29,11 @@ public class FightingReport {
     private int weaponCharac1Attack;
     private int weaponCharac2Attack;
     @ElementCollection
-    private List<Integer> attacks = new ArrayList<Integer>();
+    private List<Integer> attacks = new ArrayList<>();
 
-    public FightingReport(Charac charac1, Charac charac2, String charac1Name, String charac2Name, int charac1Level, int charac2Level) {
-        this.charac1 = charac1;
-        this.charac2 = charac2;
+    public FightingReport(int charac1ID, int charac2ID, String charac1Name, String charac2Name, int charac1Level, int charac2Level) {
+        this.charac1ID = charac1ID;
+        this.charac2ID = charac2ID;
         this.charac1Name = charac1Name;
         this.charac2Name = charac2Name;
         this.charac1Level = charac1Level;
@@ -49,6 +45,14 @@ public class FightingReport {
     }
 
     public FightingReport() {
+    }
+
+    public int getCharac1ID() {
+        return charac1ID;
+    }
+
+    public int getCharac2ID() {
+        return charac2ID;
     }
 
     public void setWeaponCharac1Name(String weaponCharac1Name) {
@@ -73,14 +77,6 @@ public class FightingReport {
 
     public void setSpecialText(String specialText) {
         this.specialText = specialText;
-    }
-
-    public Charac getCharac1() {
-        return charac1;
-    }
-
-    public Charac getCharac2() {
-        return charac2;
     }
 
     public String getCharac1Name() {
