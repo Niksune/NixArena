@@ -14,9 +14,9 @@ import java.util.concurrent.ThreadLocalRandom;
 public class FightingService {
 
     @Autowired
-    FightingReportRepositoryInterface fightingReportRepositoryInterface;
+    private FightingReportRepositoryInterface fightingReportRepositoryInterface;
     @Autowired
-    CharacRepositoryInterface characRepositoryInterface;
+    private CharacRepositoryInterface characRepositoryInterface;
 
     public int duel(Charac charac1, Charac charac2) {
 

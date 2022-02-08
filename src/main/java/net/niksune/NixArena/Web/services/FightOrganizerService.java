@@ -22,7 +22,7 @@ public class FightOrganizerService {
     @Autowired
     private WeaponRepositoryInterface weaponRepositoryInterface;
     @Autowired
-    FightingReportRepositoryInterface fightingReportRepositoryInterface;
+    private FightingReportRepositoryInterface fightingReportRepositoryInterface;
 
     @Autowired
     private FightingService fightingService;
