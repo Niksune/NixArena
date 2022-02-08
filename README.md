@@ -1,5 +1,5 @@
 # README #
 
-Backend of Test Project with Spring Boot JPA
+Micro RPG Game, learning project for Spring Boot + Hibernate using jQuery 
 
-Little game where people can create accounts, in which accounts they can have characs  that will automatically fight every day to become stronger and stronger
+People can create accounts, accounts can create characters that will automatically fight every hour to level and gain weapons become stronger and stronger
