@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 @RestController
-@CrossOrigin(origins = {"http://127.0.0.1:5500", "http://127.0.0.1:5500/actual-game/", "http://127.0.0.1:5500/general-management/"})
+@RequestMapping("/API")
 public class MainWebController {
 
     @Autowired

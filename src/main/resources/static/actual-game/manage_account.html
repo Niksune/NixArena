@@ -28,7 +28,7 @@
 
       function loadAccount() {
         $.get(
-          "http://localhost:8080/accountComplete/" + IDAccount,
+          "http://localhost:8080/API/accountComplete/" + IDAccount,
           function (account, status) {
             console.log(account);
             let result = "";
@@ -129,7 +129,7 @@
         $.ajax({
           type: "POST",
           headers: { "Content-Type": "application/json" },
-          url: "http://localhost:8080/accounts/" + IDAccount + "/add-charac",
+          url: "http://localhost:8080/API/accounts/" + IDAccount + "/add-charac",
           data: JSON.stringify(values),
           success: function () {
             loadAccount();
@@ -140,7 +140,7 @@
       function destroyCharacter(IDCharacter) {
         $.ajax({
           type: "DELETE",
-          url: "http://localhost:8080/characs/" + IDCharacter,
+          url: "http://localhost:8080/API/characs/" + IDCharacter,
           success: function () {
             loadAccount();
           },
@@ -152,7 +152,7 @@
         $.ajax({
           type: "DELETE",
           headers: { "Content-Type": "application/json" },
-          url: "http://localhost:8080/accounts/" + IDAccount + "/weapons",
+          url: "http://localhost:8080/API/accounts/" + IDAccount + "/weapons",
           data: JSON.stringify(values),
           success: function () {
             loadAccount();
@@ -171,7 +171,7 @@
         $.ajax({
           type: "PATCH",
           headers: { "Content-Type": "application/json" },
-          url: "http://localhost:8080/accounts/" + IDAccount + "/equip-to",
+          url: "http://localhost:8080/API/accounts/" + IDAccount + "/equip-to",
           data: JSON.stringify(values),
           success: function (result) {
             if (result == "LevelTooLow")
@@ -184,7 +184,7 @@
       function disarmCharacter(idCharacter) {
         $.ajax({
           type: "PATCH",
-          url: "http://localhost:8080/disarm-charac/" + idCharacter,
+          url: "http://localhost:8080/API/disarm-charac/" + idCharacter,
           success: function (result) {
             loadAccount();
           },

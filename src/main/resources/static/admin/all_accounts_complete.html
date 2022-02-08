@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nix Arena</title>
+  </head>
+  <body>
+    <h1>AllAccountsComplete</h1>
+    <h3>Return to <a href="/index.html">Index</a></h3>
+    <h3>Return to <a href="index.html">Admin</a></h3>
+    <h3>All Accounts Complete :</h3>
+
+    <div id="allAccounts"></div>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $.get(
+          "http://localhost:8080/API/allAccountsAllCharacsWithEquippedWeapon",
+          function (response, status) {
+            let result = "";
+            response.forEach((account) => {
+              console.log(account);
+              result += "<ul>";
+              result += "<li>name : " + account.name + "</li>";
+              result += "<li>Mdp : " + account.password + "</li>";
+              account.characters.forEach((character) => {
+                console.log(character);
+                result += "<ul>";
+                result += "<li>Name : " + character.name + "</li>";
+                result += "<li>Level : " + character.level + "</li>";
+                if (character.weaponEquipped === null)
+                  result += "<li>No Weapon Equipped</li>";
+                else {
+                  result += "<ul>";
+                  result +=
+                    "<li>WeaponName : " +
+                    character.weaponEquipped.name +
+                    "</li>";
+                  result +=
+                    "<li>WeaponLevel : " +
+                    character.weaponEquipped.level +
+                    "</li>";
+                  result +=
+                    "<li>WeaponAttack : " +
+                    character.weaponEquipped.attack +
+                    "</li>";
+                  result += "</ul>";
+                }
+                result += "</ul>";
+              });
+              result += "</ul>";
+            });
+            $("#allAccounts").html(result);
+          }
+        );
+      });
+    </script>
+  </body>
+</html>

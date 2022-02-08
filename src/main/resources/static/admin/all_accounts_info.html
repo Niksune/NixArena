@@ -7,8 +7,10 @@
     <title>Nix Arena</title>
   </head>
   <body>
-    <h1>Choose your Account !</h1>
+    <h1>AllAccountsInfos</h1>
     <h3>Return to <a href="/index.html">Index</a></h3>
+    <h3>Return to <a href="index.html">Admin</a></h3>
+    <h3>All Accounts Infos :</h3>
     <div id="allAccounts"></div>
 
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
@@ -21,7 +23,8 @@
             response.forEach((account) => {
               console.log(account);
               result += "<ul>";
-              result += "<li><a href='manage_account.html?IDaccount="+ account.id +"'>" + account.name + "</a></li>";
+              result += "<li>name : " + account.name + "</li>";
+              result += "<li>Mdp : " + account.password + "</li>";
               result += "</ul>";
             });
             $("#allAccounts").html(result);
