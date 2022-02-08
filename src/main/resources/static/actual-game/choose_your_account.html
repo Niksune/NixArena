@@ -8,14 +8,14 @@
   </head>
   <body>
     <h1>Choose your Account !</h1>
-    <h3>Return to <a href="/index.html">Index</a></h3>
+    <h3>Return to <a href="../index.html">Index</a></h3>
     <div id="allAccounts"></div>
 
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
     <script>
       $(document).ready(function () {
         $.get(
-          "http://localhost:8080/API/allAccountsInfos",
+          "../API/allAccountsInfos",
           function (response, status) {
             let result = "";
             response.forEach((account) => {

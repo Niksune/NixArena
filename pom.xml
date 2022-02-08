@@ -47,17 +47,17 @@
 			<artifactId>jackson-datatype-hibernate5</artifactId>
 		</dependency>
 
-<!--		PROD-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-tomcat</artifactId>-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<!--		PROD-->
 <!--			<scope>provided</scope>-->
-<!--		</dependency>-->
+		</dependency>
 	</dependencies>
 
 
 	<build>
-		<finalName>NixArenaBack</finalName>
+		<finalName>NixArena</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

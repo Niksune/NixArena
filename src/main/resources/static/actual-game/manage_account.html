@@ -8,7 +8,8 @@
   </head>
   <body>
     <h1>Manage Account</h1>
-    <h3>Return to <a href="/index.html">Index</a></h3>
+    <h3>Return to <a href="../index.html">Index</a></h3>
+    <h3>Return to <a href="choose_your_account.html">Account Selection</a></h3>
     <h3>All Accounts Infos :</h3>
     <div id="account"></div>
     <div id="form">
@@ -28,7 +29,7 @@
 
       function loadAccount() {
         $.get(
-          "http://localhost:8080/API/accountComplete/" + IDAccount,
+          "../API/accountComplete/" + IDAccount,
           function (account, status) {
             console.log(account);
             let result = "";
@@ -129,7 +130,7 @@
         $.ajax({
           type: "POST",
           headers: { "Content-Type": "application/json" },
-          url: "http://localhost:8080/API/accounts/" + IDAccount + "/add-charac",
+          url: "../API/accounts/" + IDAccount + "/add-charac",
           data: JSON.stringify(values),
           success: function () {
             loadAccount();
@@ -140,7 +141,7 @@
       function destroyCharacter(IDCharacter) {
         $.ajax({
           type: "DELETE",
-          url: "http://localhost:8080/API/characs/" + IDCharacter,
+          url: "../API/characs/" + IDCharacter,
           success: function () {
             loadAccount();
           },
@@ -152,7 +153,7 @@
         $.ajax({
           type: "DELETE",
           headers: { "Content-Type": "application/json" },
-          url: "http://localhost:8080/API/accounts/" + IDAccount + "/weapons",
+          url: "../API/accounts/" + IDAccount + "/weapons",
           data: JSON.stringify(values),
           success: function () {
             loadAccount();
@@ -171,7 +172,7 @@
         $.ajax({
           type: "PATCH",
           headers: { "Content-Type": "application/json" },
-          url: "http://localhost:8080/API/accounts/" + IDAccount + "/equip-to",
+          url: "../API/accounts/" + IDAccount + "/equip-to",
           data: JSON.stringify(values),
           success: function (result) {
             if (result == "LevelTooLow")
@@ -184,7 +185,7 @@
       function disarmCharacter(idCharacter) {
         $.ajax({
           type: "PATCH",
-          url: "http://localhost:8080/API/disarm-charac/" + idCharacter,
+          url: "../API/disarm-charac/" + idCharacter,
           success: function (result) {
             loadAccount();
           },

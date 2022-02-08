@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>Account Destructor</h1>
-    <h3>Return to <a href="/index.html">Index</a></h3>
+    <h3>Return to <a href="../index.html">Index</a></h3>
     <h3>Return to <a href="index.html">Admin</a></h3>
     <div id="allAccounts"></div>
 
@@ -20,7 +20,7 @@
 
       function getAccounts(){
         $.get(
-          "http://localhost:8080/API/allAccountsInfos",
+          "../API/allAccountsInfos",
           function (response, status) {
             let result = "";
             response.forEach((account) => {
@@ -41,7 +41,7 @@
       function destroy(id) {
         $.ajax({
           type: "DELETE",
-          url: "http://localhost:8080/API/accounts/"+id,
+          url: "../API/accounts/"+id,
           success: function () {
             alert("Account DESTROYED");
             getAccounts();

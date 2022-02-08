@@ -7,8 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 
-/*
-//PROD
+
 @SpringBootApplication
 public class NixArenaWebApplication extends SpringBootServletInitializer {
 
@@ -16,12 +15,6 @@ public class NixArenaWebApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(NixArenaWebApplication.class);
 	}
-*/
-
-//DEV
-@SpringBootApplication
-public class NixArenaWebApplication {
-
 
 	public static void main(String[] args) {
 

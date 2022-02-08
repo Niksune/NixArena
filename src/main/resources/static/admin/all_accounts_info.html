@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>AllAccountsInfos</h1>
-    <h3>Return to <a href="/index.html">Index</a></h3>
+    <h3>Return to <a href="../index.html">Index</a></h3>
     <h3>Return to <a href="index.html">Admin</a></h3>
     <h3>All Accounts Infos :</h3>
     <div id="allAccounts"></div>
@@ -17,7 +17,7 @@
     <script>
       $(document).ready(function () {
         $.get(
-          "http://localhost:8080/API/allAccountsInfos",
+          "../API/allAccountsInfos",
           function (response, status) {
             let result = "";
             response.forEach((account) => {
