@@ -12,12 +12,6 @@
     <h3>Return to <a href="choose_your_account.html">Account Selection</a></h3>
     <h3>All Accounts Infos :</h3>
     <div id="account"></div>
-    <div id="form">
-      <h3>Add a Character</h3>
-      <label for="name">Name</label> :
-      <input id="name" name="name" type="text" /> <br />
-      <button id="submit">Add a Character</button>
-    </div>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
     <script>
       const urlParams = new URLSearchParams(window.location.search);
@@ -38,13 +32,16 @@
             result += "<ul>";
             result += "<li>Name : " + account.name + "</li>";
             result += "<li>Mdp : " + account.password + "</li>";
-            result += "<h3>Characters</h3>";
+            result += "<h3>Characters " + account.characters.length + "/3</h3>";
             account.characters.forEach((character) => {
               result += "<ul>";
               result += "<li>Name : " + character.name;
               result +=
-                '&nbsp;&nbsp;&nbsp;<a href="fight_history.html?IDaccount='+IDAccount+'&IDcharacter='+
-                character.id+'"><button>Look Fight History</button></a>';
+                '&nbsp;&nbsp;&nbsp;<a href="fight_history.html?IDaccount=' +
+                IDAccount +
+                "&IDcharacter=" +
+                character.id +
+                '"><button>Look Fight History</button></a>';
               result += "</li>";
               result +=
                 "<li>Level : " +
@@ -102,9 +99,17 @@
               weaponCounter++;
             });
             result += "</ul>";
+            if (account.characters.length < 4) {
+              result += '<div id="form">';
+              result += "<h3>Add a Character</h3>";
+              result += '<label for="name">Name</label> :';
+              result += '<input id="name" name="name" type="text" /> <br />';
+              result += '<button id="submit">Add a Character</button>';
+              result += "</div>";
+            }
             $("#account").html(result);
           }
-        );
+        ).then(() => $("#submit").click(addCharacter));
       }
 
       function generateCharactersList(idWeapon, account) {
@@ -132,7 +137,9 @@
           headers: { "Content-Type": "application/json" },
           url: "../API/accounts/" + IDAccount + "/add-charac",
           data: JSON.stringify(values),
-          success: function () {
+          success: function (result) {
+            if (result == "TooManyCharacters")
+              alert("You can't have more than 3 characters on each account");
             loadAccount();
           },
         });
@@ -193,8 +200,7 @@
       }
 
       $(document).ready(function () {
-        loadAccount();
-        $("#submit").click(addCharacter);
+          loadAccount();
       });
     </script>
   </body>

@@ -183,13 +183,13 @@ public class MainWebController {
     /* ---------INTERACTIONS--------- */
 
     @PostMapping("/accounts/{id}/add-charac")
-    public int addCharacToAccount(@PathVariable("id") String id, @RequestBody Charac charac) {
+    public String addCharacToAccount(@PathVariable("id") String id, @RequestBody Charac charac) {
         Account account = accountRepositoryService.findCompleteByID(Integer.parseInt(id));
-        //if(account.getCharacs().size()>3)
-        //    return
+        if(account.getCharacs().size()>=3)
+            return "TooManyCharacters";
         account.addCharacter(charac);
         accountRepositoryInterface.save(account);
-        return 1;
+        return "OK";
     }
 
     @PatchMapping("/accounts/{id}/equip-to")

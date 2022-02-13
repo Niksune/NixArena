@@ -8,4 +8,4 @@ LevelTooLow : The character has a too low level to equip a weapon (character's l
 
 NoWeaponEquipped : Selected character has no weapon equipped
 
-
+TooManyCharacters : The account would exceed 3 characters
