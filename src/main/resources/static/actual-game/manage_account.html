@@ -32,6 +32,7 @@
             result += "<ul>";
             result += "<li>Name : " + account.name + "</li>";
             result += "<li>Mdp : " + account.password + "</li>";
+            result += "<li>Gold : " + account.gold + "</li>";
             result += "<h3>Characters " + account.characters.length + "/3</h3>";
             account.characters.forEach((character) => {
               result += "<ul>";
@@ -96,7 +97,7 @@
               result +=
                 "<button onClick='destroyWeapon(" +
                 weaponCounter +
-                ")'>Destroy Weapon</button>";
+                ")'>Sell Weapon</button>";
               result += "</ul><br>";
               weaponCounter++;
             });

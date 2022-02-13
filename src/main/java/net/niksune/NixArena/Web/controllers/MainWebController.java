@@ -123,6 +123,7 @@ public class MainWebController {
         return 1;
     }
 
+    // Destroys the weapon but gives gold to the account equals to its attack value
     @DeleteMapping("/accounts/{idAccount}/weapons")
     public int deleteStoredWeapon(@PathVariable("idAccount") String idAccount, @RequestBody String json) {
 
@@ -132,6 +133,7 @@ public class MainWebController {
         try {
             JsonNode jsonNode = mapper.readTree(json);
             int numberWeapon = jsonNode.get("numberWeapon").asInt();
+            account.addGold(account.getWeaponsStored().get(numberWeapon).getAttack());
             account.getWeaponsStored().remove(numberWeapon);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

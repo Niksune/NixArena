@@ -20,6 +20,7 @@ public class Account {
     private int ID = 0;
     private String name;
     private String password;
+    private int gold = 0;
     @JsonProperty("characters")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Charac> characs = new ArrayList<>();
@@ -30,6 +31,10 @@ public class Account {
     public void addCharacter(Charac charac){
         this.characs.add(charac);
         charac.setOwnerAccount(this);
+    }
+
+    public void addGold(int goldToAdd){
+        setGold(getGold()+goldToAdd);
     }
 
 
@@ -52,6 +57,13 @@ public class Account {
         this.password = password;
     }
 
+    public int getGold() {
+        return gold;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
 
     public List<Weapon> getWeaponsStored() {
         return weaponsStored;
