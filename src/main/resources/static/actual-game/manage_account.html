@@ -78,7 +78,9 @@
 
             let weaponCounter = 0;
 
-            result += "<h3>Weapons Stored</h3>";
+            result += "<h3>Weapons Stored "+account.weaponsStored.length+"/25</h3>";
+            if(account.weaponsStored.length>=25)
+              result += "<h4>Warning ! You will not gain new weapons !</h4>";
 
             account.weaponsStored.forEach((weapon) => {
               result += "<ul>";

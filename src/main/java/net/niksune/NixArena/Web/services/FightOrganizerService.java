@@ -68,13 +68,15 @@ public class FightOrganizerService {
     public void victoryOutLevel(Charac charac){
         //Gets the just made fighting report
         charac.getFightingReports().get(charac.getFightingReports().size()-1).setSpecialText("OverLevel");
-        charac.getOwnerAccount().getWeaponsStored().add(WeaponService.newWeapon(charac.getLevel()+5));
+        if(charac.getOwnerAccount().getWeaponsStored().size() < 25)
+            charac.getOwnerAccount().getWeaponsStored().add(WeaponService.newWeapon(charac.getLevel()+5));
         characRepositoryInterface.save(charac);
 
     }
 
     public void lose(Charac charac){
-        charac.getOwnerAccount().getWeaponsStored().add(WeaponService.newWeapon(charac.getLevel()));
+        if(charac.getOwnerAccount().getWeaponsStored().size() < 25)
+            charac.getOwnerAccount().getWeaponsStored().add(WeaponService.newWeapon(charac.getLevel()));
         characRepositoryInterface.save(charac);
     }
 
