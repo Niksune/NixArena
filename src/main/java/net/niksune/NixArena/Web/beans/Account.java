@@ -46,6 +46,10 @@ public class Account {
         return "Account{" + "ID=" + ID + ", email='" + name + '\'' + ", password='" + password + '\'' + ", characs=" + characs + '}';
     }
 
+    public Account(String name) {
+        this.name = name;
+    }
+
     public Account(int ID, String name, String password) {
         this.ID = ID;
         this.name = name;

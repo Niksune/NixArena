@@ -7,6 +7,7 @@ import net.niksune.NixArena.Web.repositories.*;
 import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
 import net.niksune.NixArena.Web.beans.Weapon;
+import net.niksune.NixArena.Web.services.CharacService;
 import net.niksune.NixArena.Web.services.FightOrganizerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +33,9 @@ public class MainWebController {
     private CharacRepositoryService characRepositoryService;
 
     @Autowired
+    private CharacService characService;
+
+    @Autowired
     private FightOrganizerService fightOrganizerService;
 
 
@@ -40,7 +44,7 @@ public class MainWebController {
     @GetMapping("/mainScenario")
     public String mainScenario() {
 
-        Account nix = new Account("Nix","badada");
+        Account nix = new Account("Nix", "badada");
 
         Charac romeo = new Charac("Romeo");
         Weapon spear = new Weapon("Spear", 5);
@@ -110,13 +114,12 @@ public class MainWebController {
     }
 
     @GetMapping("/accountComplete/{id}/{sortWeapons}")
-    public Account getAccountCompleteById(@PathVariable("id") String id,@PathVariable("sortWeapons") String sortWeapons) {
-        Account account =  accountRepositoryService.findCompleteByID(Integer.parseInt(id));
-        if(sortWeapons.equals("1")){
+    public Account getAccountCompleteById(@PathVariable("id") String id, @PathVariable("sortWeapons") String sortWeapons) {
+        Account account = accountRepositoryService.findCompleteByID(Integer.parseInt(id));
+        if (sortWeapons.equals("1")) {
             Collections.sort(account.getWeaponsStored());
-        }
-        else if (sortWeapons.equals("2")){
-            Collections.sort(account.getWeaponsStored(),Collections.reverseOrder());
+        } else if (sortWeapons.equals("2")) {
+            Collections.sort(account.getWeaponsStored(), Collections.reverseOrder());
         }
         return account;
     }
@@ -201,10 +204,18 @@ public class MainWebController {
     @PostMapping("/accounts/{id}/add-charac")
     public String addCharacToAccount(@PathVariable("id") String id, @RequestBody Charac charac) {
         Account account = accountRepositoryService.findCompleteByID(Integer.parseInt(id));
-        if(account.getCharacs().size()>=3)
+        if (account.getCharacs().size() >= 3)
             return "TooManyCharacters";
         account.addCharacter(charac);
         accountRepositoryInterface.save(account);
+
+        // For each not character made by a player, we generate 4 characters to the Master of Puppets
+        Account master = accountRepositoryInterface.getWithCharacsByName("Master of Puppets");
+        for (int i = 0; i < 4; i++)
+            master.getCharacs().add(new Charac(characService.randomName()));
+
+        accountRepositoryInterface.save(master);
+
         return "OK";
     }
 
