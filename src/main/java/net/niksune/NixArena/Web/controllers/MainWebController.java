@@ -211,8 +211,9 @@ public class MainWebController {
 
         // For each not character made by a player, we generate 4 characters to the Master of Puppets
         Account master = accountRepositoryInterface.getWithCharacsByName("Master of Puppets");
-        for (int i = 0; i < 4; i++)
-            master.getCharacs().add(new Charac(characService.randomName()));
+        for (int i = 0; i < 4; i++) {
+            master.addCharacter(new Charac(characService.randomName()));
+        }
 
         accountRepositoryInterface.save(master);
 

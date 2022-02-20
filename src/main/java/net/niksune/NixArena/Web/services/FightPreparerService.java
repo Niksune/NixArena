@@ -12,12 +12,12 @@ public class FightPreparerService {
 
     public List<Charac> randomizer(List<Charac> characters){
 
-        for(Charac charac : characters)
-            System.out.println(charac);
+//        for(Charac charac : characters)
+//            System.out.println(charac);
 
         int maxLevel = maxLevel(characters);
 
-        System.out.println(maxLevel);
+//        System.out.println(maxLevel);
 
         List<List<Charac>> charactersByLevel = new ArrayList<>();
 
@@ -36,8 +36,8 @@ public class FightPreparerService {
         for(int i = 0;i<=maxLevel;i++)
             characters.addAll(charactersByLevel.get(i));
 
-        for(Charac charac : characters)
-            System.out.println(charac);
+//        for(Charac charac : characters)
+//            System.out.println(charac);
 
         return characters;
     }
