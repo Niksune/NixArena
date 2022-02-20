@@ -21,9 +21,12 @@
 
       const IDAccount = urlParams.get("IDaccount");
 
+      //0 : acquisition order, 1 : strongest to weakest, 2 : weakest to strongest
+      let sortWeapons = 0;
+
       function loadAccount() {
         $.get(
-          "../API/accountComplete/" + IDAccount,
+          "../API/accountComplete/" + IDAccount + "/" + sortWeapons,
           function (account, status) {
             console.log(account);
             let result = "";
@@ -79,8 +82,12 @@
 
             let weaponCounter = 0;
 
-            result += "<h3>Weapons Stored "+account.weaponsStored.length+"/25</h3>";
-            if(account.weaponsStored.length>=25)
+            result +=
+              "<h3>Weapons Stored " + account.weaponsStored.length + "/25";
+            result +=
+              "&nbsp;&nbsp;&nbsp;<button onClick='changeSort()'>Sort Weapons "+sortArrow()+"</button>";
+            result += "</h3>";
+            if (account.weaponsStored.length >= 25)
               result += "<h4>Warning ! You will not gain new weapons !</h4>";
 
             account.weaponsStored.forEach((weapon) => {
@@ -113,6 +120,23 @@
             $("#account").html(result);
           }
         ).then(() => $("#submit").click(addCharacter));
+      }
+
+      function changeSort() {
+        if(sortWeapons == 0 || sortWeapons == 2)
+          sortWeapons = 1;
+        else
+          sortWeapons = 2;
+        loadAccount();
+      }
+
+      function sortArrow() {
+        if(sortWeapons == 1)
+          return "↓";
+        else if(sortWeapons == 2)
+          return "↑";
+        else
+          return "";
       }
 
       function generateCharactersList(idWeapon, account) {
@@ -203,7 +227,7 @@
       }
 
       $(document).ready(function () {
-          loadAccount();
+        loadAccount();
       });
     </script>
   </body>

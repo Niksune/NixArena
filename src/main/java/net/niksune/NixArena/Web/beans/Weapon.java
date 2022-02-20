@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Weapon {
+public class Weapon implements Comparable<Weapon> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +16,11 @@ public class Weapon {
     private String name;
     private int level;
     private int attack;
+
+    @Override
+    public int compareTo(Weapon o) {
+        return o.attack - attack;
+    }
 
     @Override
     public String toString() {
@@ -73,4 +78,6 @@ public class Weapon {
     public void setAttack(int attack) {
         this.attack = attack;
     }
+
+
 }

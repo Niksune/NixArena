@@ -11,6 +11,7 @@ import net.niksune.NixArena.Web.services.FightOrganizerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Optional;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -107,6 +108,19 @@ public class MainWebController {
     public Account getAccountCompleteById(@PathVariable("id") String id) {
         return accountRepositoryService.findCompleteByID(Integer.parseInt(id));
     }
+
+    @GetMapping("/accountComplete/{id}/{sortWeapons}")
+    public Account getAccountCompleteById(@PathVariable("id") String id,@PathVariable("sortWeapons") String sortWeapons) {
+        Account account =  accountRepositoryService.findCompleteByID(Integer.parseInt(id));
+        if(sortWeapons.equals("1")){
+            Collections.sort(account.getWeaponsStored());
+        }
+        else if (sortWeapons.equals("2")){
+            Collections.sort(account.getWeaponsStored(),Collections.reverseOrder());
+        }
+        return account;
+    }
+
 
     // Others HTTP Requests
 
