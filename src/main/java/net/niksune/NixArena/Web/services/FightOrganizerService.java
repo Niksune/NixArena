@@ -26,61 +26,65 @@ public class FightOrganizerService {
 
     @Autowired
     private FightingService fightingService;
+    @Autowired
+    private FightPreparerService fightPreparerService;
 
     @Transactional
-    public int allFights(){
+    public int allFights() {
 
         List<Charac> allCharacters = characRepositoryInterface.findAllByOrderByLevelAsc();
 
-        for(int i = 0;i<allCharacters.size()-1;i+=2)
-        {
+        allCharacters = fightPreparerService.randomizer(allCharacters);
+
+        for (int i = 0; i < allCharacters.size() - 1; i += 2) {
             Charac charac1 = allCharacters.get(i);
             Charac charac2 = allCharacters.get(i + 1);
 
             int result = fightingService.duel(charac1, charac2);
-            if(result == 1) {
+            if (result == 1) {
                 victory(charac1);
                 lose(charac2);
-            }
-            else if(result == 2 && charac1.getLevel() == charac2.getLevel()) {
+            } else if (result == 2 && charac1.getLevel() == charac2.getLevel()) {
                 lose(charac1);
                 victory(charac2);
             }
             //That means that a more leveled character won
             //By the rule of orders charac1 is always less leveled or egal than charac2
-            else if(result == 2 && charac1.getLevel() != charac2.getLevel()) {
+            else if (result == 2 && charac1.getLevel() != charac2.getLevel()) {
                 lose(charac1);
                 victoryOutLevel(charac2);
             }
         }
 
-        if(allCharacters.size()%2==1)
-            soloChar(allCharacters.get(allCharacters.size()-1));
+        if (allCharacters.size() % 2 == 1)
+            soloChar(allCharacters.get(allCharacters.size() - 1));
 
         return 1;
     }
 
-    public void victory(Charac charac){
+
+
+    public void victory(Charac charac) {
         charac.levelUp();
         characRepositoryInterface.save(charac);
     }
 
-    public void victoryOutLevel(Charac charac){
+    public void victoryOutLevel(Charac charac) {
         //Gets the just made fighting report
-        charac.getFightingReports().get(charac.getFightingReports().size()-1).setSpecialText("OverLevel");
-        if(charac.getOwnerAccount().getWeaponsStored().size() < 25)
-            charac.getOwnerAccount().getWeaponsStored().add(WeaponService.newWeapon(charac.getLevel()+5));
+        charac.getFightingReports().get(charac.getFightingReports().size() - 1).setSpecialText("OverLevel");
+        if (charac.getOwnerAccount().getWeaponsStored().size() < 25)
+            charac.getOwnerAccount().getWeaponsStored().add(WeaponService.newWeapon(charac.getLevel() + 5));
         characRepositoryInterface.save(charac);
 
     }
 
-    public void lose(Charac charac){
-        if(charac.getOwnerAccount().getWeaponsStored().size() < 25)
+    public void lose(Charac charac) {
+        if (charac.getOwnerAccount().getWeaponsStored().size() < 25)
             charac.getOwnerAccount().getWeaponsStored().add(WeaponService.newWeapon(charac.getLevel()));
         characRepositoryInterface.save(charac);
     }
 
-    public void soloChar(Charac charac){
+    public void soloChar(Charac charac) {
         FightingReport fightingReport = new FightingReport("Alone");
         charac.getFightingReports().add(fightingReport);
 
