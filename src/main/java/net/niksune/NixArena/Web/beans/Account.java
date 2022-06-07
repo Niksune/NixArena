@@ -21,12 +21,20 @@ public class Account {
     private String name;
     private String password;
     private int gold = 0;
+    private int stamina = 5;
     @JsonProperty("characters")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Charac> characs = new ArrayList<>();
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Weapon> weaponsStored = new ArrayList<>();
 
+    public void addStamina(int staminaToAdd){
+        setStamina(getStamina()+staminaToAdd);
+    };
+
+    public void removeStamina(int staminaToRemove){
+        setStamina(getStamina()-staminaToRemove);
+    }
 
     public void addCharacter(Charac charac){
         this.characs.add(charac);
@@ -108,4 +116,8 @@ public class Account {
     public void setCharacs(List<Charac> characs) {
         this.characs = characs;
     }
+
+    public int getStamina() {return stamina;}
+
+    public void setStamina(int stamina) {this.stamina = stamina;}
 }

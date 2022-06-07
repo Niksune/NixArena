@@ -1,6 +1,7 @@
 package net.niksune.NixArena.Web.repositories;
 
 
+import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,5 +60,15 @@ public class CharacRepositoryService {
         return charac;
     }
 
+    @Transactional
+    public Boolean useStamina(int idCharac){
+        Charac charac = characRepositoryInterface.getById(idCharac);
+        Account account = charac.getOwnerAccount();
 
+        if (account.getStamina() > 0){
+            account.setStamina(account.getStamina()-1);
+            return(true);
+        } else {
+            return (false);}
+    }
 }

@@ -190,6 +190,15 @@ public class MainWebController {
 
     // Others HTTP Requests
 
+    @PatchMapping("/characs/{id}/usestamina")
+    public int manualFightCharac(@PathVariable("id") String id) {
+        if (characRepositoryService.useStamina(Integer.parseInt(id))) {
+            fightOrganizerService.manualFight(Integer.parseInt(id));
+            return (1);
+        }
+        return (0);
+    }
+
     @DeleteMapping("/characs/{id}")
     public int deleteCharacById(@PathVariable("id") String id) {
 

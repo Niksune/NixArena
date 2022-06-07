@@ -31,4 +31,6 @@ public interface AccountRepositoryInterface extends JpaRepository<Account,Intege
 
     @EntityGraph(value="graph.Account.characters",type= EntityGraph.EntityGraphType.FETCH)
     Account getWithCharacsByName(String name);
+
+
 }

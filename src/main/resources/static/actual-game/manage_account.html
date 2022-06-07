@@ -36,6 +36,7 @@
             result += "<li>Name : " + account.name + "</li>";
             result += "<li>Mdp : " + account.password + "</li>";
             result += "<li>Gold : " + account.gold + "</li>";
+            result += "<li>Stamina : " + account.stamina + "<li>";
             result += "<h3>Characters " + account.characters.length + "/3</h3>";
             account.characters.forEach((character) => {
               result += "<ul>";
@@ -46,6 +47,9 @@
                 "&IDcharacter=" +
                 character.id +
                 '"><button>Look Fight History</button></a>';
+              result +=
+                '&nbsp;&nbsp;&nbsp;<button onClick="useStamina(' + character.id +
+                ')">Use Stamina for fight</button>';
               result += "</li>";
               result +=
                 "<li>Level : " +
@@ -154,6 +158,20 @@
         res += "</select>";
 
         return res;
+      }
+
+      function useStamina(id){
+        $.ajax({
+          type: "PATCH",
+          url: "../API/characs/" + id + "/usestamina",
+          success: function (result) {
+            if (result == 1){
+              alert("You are go in arena!");
+              loadAccount()
+            } else{
+            alert("You dont have any stamina!");
+          }}
+        }); 
       }
 
       function addCharacter() {
