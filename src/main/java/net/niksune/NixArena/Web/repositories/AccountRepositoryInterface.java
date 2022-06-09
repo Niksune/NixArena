@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public interface AccountRepositoryInterface extends JpaRepository<Account,Integer> {
+public interface AccountRepositoryInterface extends JpaRepository<Account, UUID> {
 
     @EntityGraph(value="graph.Account.characsWithEquippedWeapon",type= EntityGraph.EntityGraphType.FETCH)
     List<Account> findAllCharacsWithEquippedWeaponBy();
@@ -22,10 +23,10 @@ public interface AccountRepositoryInterface extends JpaRepository<Account,Intege
     //Optional<Account> findCompleteByID(int ID);
 
     @EntityGraph(value="graph.Account.onlyInfos",type= EntityGraph.EntityGraphType.FETCH)
-    Optional<Account> findInfosByID(int ID);
+    Optional<Account> findInfosByID(UUID ID);
 
     @EntityGraph(value="graph.Account.weaponsStored",type= EntityGraph.EntityGraphType.FETCH)
-    Optional<Account> findWithWeaponsStoredByID(int ID);
+    Optional<Account> findWithWeaponsStoredByID(UUID ID);
 
     boolean existsByName(String s);
 

@@ -1,6 +1,7 @@
 package net.niksune.NixArena.Web.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.*;
@@ -16,8 +17,14 @@ import java.util.*;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID = 0;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    //Necessary for MariaDB/MySQL
+    @Column(columnDefinition = "VARBINARY(16)")
+    private UUID ID;
     private String name;
     private String password;
     private int gold = 0;
@@ -50,12 +57,6 @@ public class Account {
         this.name = name;
     }
 
-    public Account(int ID, String name, String password) {
-        this.ID = ID;
-        this.name = name;
-        this.password = password;
-    }
-
     public Account(String name, String password) {
         this.name = name;
         this.password = password;
@@ -77,11 +78,11 @@ public class Account {
         this.weaponsStored = weaponsStored;
     }
 
-    public int getID() {
+    public UUID getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(UUID ID) {
         this.ID = ID;
     }
 

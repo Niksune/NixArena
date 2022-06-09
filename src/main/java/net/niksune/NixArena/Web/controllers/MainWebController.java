@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 @RestController
@@ -105,17 +106,17 @@ public class MainWebController {
 
     @GetMapping("/accountInfos/{id}")
     public Optional<Account> getAccountInfosById(@PathVariable("id") String id) {
-        return accountRepositoryInterface.findInfosByID(Integer.parseInt(id));
+        return accountRepositoryInterface.findInfosByID(UUID.fromString(id));
     }
 
     @GetMapping("/accountComplete/{id}")
     public Account getAccountCompleteById(@PathVariable("id") String id) {
-        return accountRepositoryService.findCompleteByID(Integer.parseInt(id));
+        return accountRepositoryService.findCompleteByID(UUID.fromString(id));
     }
 
     @GetMapping("/accountComplete/{id}/{sortWeapons}")
     public Account getAccountCompleteById(@PathVariable("id") String id, @PathVariable("sortWeapons") String sortWeapons) {
-        Account account = accountRepositoryService.findCompleteByID(Integer.parseInt(id));
+        Account account = accountRepositoryService.findCompleteByID(UUID.fromString(id));
         if (sortWeapons.equals("1")) {
             Collections.sort(account.getWeaponsStored());
         } else if (sortWeapons.equals("2")) {
@@ -136,7 +137,7 @@ public class MainWebController {
 
     @DeleteMapping("/accounts/{id}")
     public int deleteAccountById(@PathVariable("id") String id) {
-        accountRepositoryInterface.deleteById(Integer.parseInt(id));
+        accountRepositoryInterface.deleteById(UUID.fromString(id));
         return 1;
     }
 
@@ -144,7 +145,7 @@ public class MainWebController {
     @DeleteMapping("/accounts/{idAccount}/weapons")
     public int deleteStoredWeapon(@PathVariable("idAccount") String idAccount, @RequestBody String json) {
 
-        Account account = accountRepositoryInterface.findWithWeaponsStoredByID(Integer.parseInt(idAccount)).get();
+        Account account = accountRepositoryInterface.findWithWeaponsStoredByID(UUID.fromString(idAccount)).get();
 
         ObjectMapper mapper = new ObjectMapper();
         try {
@@ -203,7 +204,7 @@ public class MainWebController {
 
     @PostMapping("/accounts/{id}/add-charac")
     public String addCharacToAccount(@PathVariable("id") String id, @RequestBody Charac charac) {
-        Account account = accountRepositoryService.findCompleteByID(Integer.parseInt(id));
+        Account account = accountRepositoryService.findCompleteByID(UUID.fromString(id));
         if (account.getCharacs().size() >= 3)
             return "TooManyCharacters";
         account.addCharacter(charac);
@@ -231,7 +232,7 @@ public class MainWebController {
             int numChar = jsonNode.get("characterNumber").asInt();
             int idWeapon = jsonNode.get("idWeapon").asInt();
 
-            result = accountRepositoryService.assignWeaponToChar(Integer.parseInt(idAccount), idWeapon, numChar);
+            result = accountRepositoryService.assignWeaponToChar(UUID.fromString(idAccount), idWeapon, numChar);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
