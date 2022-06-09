@@ -1,10 +1,12 @@
 package net.niksune.NixArena.Web.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @NamedEntityGraph(name = "graph.Character.weapon", attributeNodes = @NamedAttributeNode("weaponEquipped"))
@@ -14,8 +16,14 @@ import java.util.List;
 public class Charac {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    //Necessary for MariaDB/MySQL
+    @Column(columnDefinition = "VARBINARY(16)")
+    private UUID ID;
     private String name;
     private int level = 1;
     @OneToOne(fetch = FetchType.LAZY,
@@ -93,11 +101,11 @@ public class Charac {
         return weaponEquipped;
     }
 
-    public int getID() {
+    public UUID getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(UUID ID) {
         this.ID = ID;
     }
 

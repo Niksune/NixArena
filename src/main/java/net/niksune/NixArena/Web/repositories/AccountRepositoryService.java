@@ -74,7 +74,7 @@ public class AccountRepositoryService {
     }
 
     @Transactional
-    public String disarmCharac(int idCharac){
+    public String disarmCharac(UUID idCharac){
 
         Charac charac = characRepositoryInterface.getById(idCharac);
         Account account = charac.getOwnerAccount();

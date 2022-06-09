@@ -5,8 +5,9 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface CharacRepositoryInterface extends JpaRepository<Charac,Integer> {
+public interface CharacRepositoryInterface extends JpaRepository<Charac, UUID> {
 
     @EntityGraph(value="graph.Character.weapon",type= EntityGraph.EntityGraphType.FETCH)
     List<Charac> findAllWithWeaponBy();
@@ -17,6 +18,6 @@ public interface CharacRepositoryInterface extends JpaRepository<Charac,Integer>
     List<Charac> findAllByOrderByLevelAsc();
 
     @EntityGraph(value="graph.Character.complete",type= EntityGraph.EntityGraphType.FETCH)
-    Charac findCompleteByID(int ID);
+    Charac findCompleteByID(UUID ID);
 
 }

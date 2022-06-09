@@ -187,7 +187,7 @@ public class MainWebController {
 
     @GetMapping("/charac/{id}/fightingreports")
     public Charac getCharacWith5LastFightingreportsById(@PathVariable("id") String id) {
-        return characRepositoryService.findWithFightingreportsById(Integer.parseInt(id));
+        return characRepositoryService.findWithFightingreportsById(UUID.fromString(id));
     }
 
     // Others HTTP Requests
@@ -195,7 +195,7 @@ public class MainWebController {
     @DeleteMapping("/characs/{id}")
     public int deleteCharacById(@PathVariable("id") String id) {
 
-        characRepositoryService.destroyCharacAndRetrieveWeapon(Integer.parseInt(id));
+        characRepositoryService.destroyCharacAndRetrieveWeapon(UUID.fromString(id));
 
         return 1;
     }
@@ -255,7 +255,7 @@ public class MainWebController {
     @PatchMapping("disarm-charac/{idCharacter}")
     public String disarmCharac(@PathVariable("idCharacter") String idCharacter) {
 
-        return accountRepositoryService.disarmCharac(Integer.parseInt(idCharacter));
+        return accountRepositoryService.disarmCharac(UUID.fromString(idCharacter));
     }
 
 
