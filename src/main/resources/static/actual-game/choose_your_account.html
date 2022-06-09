@@ -20,26 +20,29 @@
     <section>
       <h1 id="title-account">Choose your account</h1>
       <div id="allAccounts"></div>
-  
-      <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
-      <script>
-        $(document).ready(function () {
-          $.get(
-            "../API/allAccountsInfos",
-            function (response, status) {
-              let result = "";
-              response.forEach((account) => {
-                console.log(account);
-                result += "<ul>";
-                result += "<li><a href='manage_account.html?IDaccount="+ account.id +"'>" + account.name + "</a></li>";
-                result += "</ul>";
-              });
-              $("#allAccounts").html(result);
-            }
-          );
-        });
-      </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+        <script>
+          $(document).ready(function () {
+            $.get(
+              "../API/allAccountsInfos",
+              function (response, status) {
+                let result = "";
+                result +="<ul>";
+                response.forEach((account) => {
+                  console.log(account);
+                  result += "<li><button><a href='manage_account.html?IDaccount="+ account.id +"'>" + account.name + "</a></button></li>";
+                });
+                result +="</ul>";
+                $("#allAccounts").html(result);
+              }
+            );
+          });
+        </script>
     </section>
     
+<footer>
+  <h3>- Made by Nicolas Benoit -</h3>
+</footer>
+
   </body>
 </html>
