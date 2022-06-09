@@ -3,6 +3,7 @@ package net.niksune.NixArena.Web.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.niksune.NixArena.Web.forms.ConnectionForm;
 import net.niksune.NixArena.Web.repositories.*;
 import net.niksune.NixArena.Web.beans.Account;
 import net.niksune.NixArena.Web.beans.Charac;
@@ -201,6 +202,17 @@ public class MainWebController {
 
 
     /* ---------INTERACTIONS--------- */
+
+    @PostMapping("/accounts/connection")
+    public UUID connection(@RequestBody ConnectionForm connectionForm) {
+        Optional<Account> account = accountRepositoryInterface.findByNameAndPassword(connectionForm.getName(), connectionForm.getPassword());
+
+        if(account.isEmpty())
+            return new UUID( 0 , 0 );
+        else
+            return account.get().getID();
+
+    }
 
     @PostMapping("/accounts/{id}/add-charac")
     public String addCharacToAccount(@PathVariable("id") String id, @RequestBody Charac charac) {

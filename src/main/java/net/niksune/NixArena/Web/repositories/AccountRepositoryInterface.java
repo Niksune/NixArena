@@ -3,6 +3,7 @@ package net.niksune.NixArena.Web.repositories;
 import net.niksune.NixArena.Web.beans.Account;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,4 +33,7 @@ public interface AccountRepositoryInterface extends JpaRepository<Account, UUID>
 
     @EntityGraph(value="graph.Account.characters",type= EntityGraph.EntityGraphType.FETCH)
     Account getWithCharacsByName(String name);
+
+    @Query("SELECT a FROM Account a WHERE a.name = :name AND a.password = :password")
+    Optional<Account> findByNameAndPassword(String name, String password);
 }
