@@ -13,10 +13,26 @@
     src: url(../font/Righteous/Righteous-Regular.ttf);
 }
 
-h1,h2,h3,h4 {
+h1,h2,h3,h4,label {
     font-size: 3em;
     color: white;
     font-family: Righteous;
+}
+
+.characters a {
+    color: white;
+    font-family: Righteous;
+    font-size: 2em;
+}
+
+input{
+    border: 4px solid #11E5F7;
+    background-color: transparent;
+    width: 100%;
+    color: white;
+    font-size: 1em;
+    font-family: Ubuntu-light;
+    text-align: center;
 }
 
 h1{
@@ -35,7 +51,6 @@ p {
     color: white;
     font-family: Ubuntu-light;
 }
-
 body {
     background-color: #400022;
 }
@@ -60,6 +75,9 @@ footer {
 li {
     list-style-type: none;
     text-align: center;
+    color: white;
+    font-family: Ubuntu-light;
+    font-size: 2em;
 }
 
 li button{
@@ -69,20 +87,6 @@ li button{
 section {
     width: 80%;
     margin: 0 auto;
-}
-
-#title{
-    width: fit-content;
-    margin: 0 auto;
-}
-
-#header-menu {
-    display: flex;
-    flex-direction: row;
-}
-
-#header-menu a {
-    margin: 0 1%;
 }
 
 button {
@@ -110,6 +114,40 @@ button a {
     padding: 0 3em;
 }
 
+button h2 {
+    padding: 0 3em;
+}
+
+.input-login{
+    padding: 12%;
+    width: 35em;
+    margin: auto;
+}
+
+.input-login input{
+    height: 5em;
+}
+
+.input-login button{
+    margin: 2% auto;
+    width: fit-content;
+    display: flex;
+}
+
+.title{
+    width: fit-content;
+    margin: 0 auto;
+}
+
+#header-menu {
+    display: flex;
+    flex-direction: row;
+}
+
+#header-menu a {
+    margin: 0 1%;
+}
+
 #logo {
     width: 50%;
     margin: 15% auto 0 auto;
@@ -121,4 +159,33 @@ button a {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
+}
+
+.stats{
+    width: fit-content;
+    margin: 1% auto;
+    padding: 1%;
+    border: 4px solid #11E5F7;
+    
+}
+
+.characters{
+    border: 4px solid #11E5F7;
+    margin: 2% 0;
+}
+
+.character-stats{
+    border: 4px dashed #11E5F7;
+    padding: 2%;
+    width: 85%;
+    margin: 0 auto;
+}
+
+.character-stats li {
+    text-align: left;
+}
+
+.stats-title {
+    width: fit-content;
+    margin: 1% 0 0 2%;
 }

@@ -18,7 +18,7 @@
     </header>
     
     <section>
-      <h1 id="title">Manage Account</h1>
+      <h1 class="title">Manage Account</h1>
       
       <div id="account"></div>
       
@@ -42,40 +42,40 @@
               let result = "";
               let numberMain = account.numberMain;
   
-              result += "<h3>";
+              result += "<div class='stats'><h3>";
               result += "Name : " + account.name + " | ";
               result += "Mdp : " + account.password + " | ";
               result += "Gold : " + account.gold + " | ";
               result += "Stamina : " + account.stamina + " | ";
-              result += "Characters " + account.characters.length + "</h3>";
+              result += "Characters " + account.characters.length + "</h3></div>";
               account.characters.forEach((character) => {
-                result += "<ul>";
-                result += "<li>Name : " + character.name;
+                result += "<div class='characters'>";
+                result += "<h2 class='stats-title'>" + character.name;
                 result +=
-                  '&nbsp;&nbsp;&nbsp;<a href="fight_history.html?IDaccount=' +
+                  '</h2><button><a href="fight_history.html?IDaccount=' +
                   IDAccount +
                   "&IDcharacter=" +
                   character.id +
-                  '"><button>Look Fight History</button></a>';
+                  '">Look Fight History</a></button>';
                 result +=
-                  '&nbsp;&nbsp;&nbsp;<button onClick="useStamina(' + character.id +
-                  ')">Use Stamina for fight</button>';
-                result += "</li>";
+                  '<button onClick="useStamina(' + character.id +
+                  ')"><h2>Use Stamina for fight</h2></button>';
+                result += "<div class='character-stats'></li>";
                 result +=
-                  "<li>Level : " +
+                  "<p>Level : " +
                   character.level +
                   " - Total Attack : " +
                   character.totalAttack +
-                  "</li>";
+                  "</p>";
                 if (character.weaponEquipped === null)
-                  result += "<li>No Weapon Equipped</li>";
+                  result += "<p>No Weapon Equipped</p>";
                 else {
                   result += "<ul>";
                   result += "<li>WeaponName : " + character.weaponEquipped.name;
                   result +=
-                    "&nbsp;&nbsp;&nbsp;<button onClick='disarmCharacter(" +
+                    "<br><button onClick='disarmCharacter(" +
                     character.id +
-                    ")'>Disarm</button>";
+                    ")'><p>Disarm</p></button>";
                   result += "</li>";
                   result +=
                     "<li>WeaponLevel : " +
@@ -88,16 +88,16 @@
                   result += "</ul>";
                 }
                 result +=
-                  "<button onClick='destroyCharacter(" +
+                  "</div><button onClick='destroyCharacter(" +
                   character.id +
-                  ")'>Destroy Character</button>";
-                result += "</ul><br>";
+                  ")'><h2>Destroy Character</h2></button>";
+                result += "</ul></div>";
               });
   
               let weaponCounter = 0;
   
               result +=
-                "<h3>Weapons Stored " + account.weaponsStored.length + "/25";
+                "<hr><h3>Weapons Stored " + account.weaponsStored.length + "/25";
               result +=
                 "&nbsp;&nbsp;&nbsp;<button onClick='changeSort()'>Sort Weapons "+sortArrow()+"</button>";
               result += "</h3>";
