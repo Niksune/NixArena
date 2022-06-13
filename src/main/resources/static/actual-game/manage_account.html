@@ -11,9 +11,8 @@
   <body>
     <header>
       <div id="header-menu">
-        <a href="">Home</a>
-        <a href="">Characters</a>
-        <a href="">Account</a>
+        <a href="../actual-game/choose_your_account.html">Home</a>
+        <a href="../admin/index.html">Admin</a>
       </div>
     </header>
     
@@ -45,9 +44,9 @@
               result += "<div class='stats'><h3>";
               result += "Name : " + account.name + " | ";
               result += "Mdp : " + account.password + " | ";
-              result += "Gold : " + account.gold + " | ";
-              result += "Stamina : " + account.stamina + " | ";
-              result += "Characters " + account.characters.length + "</h3></div>";
+              result += "🪙Gold : " + account.gold + " | ";
+              result += "💊Stamina : " + account.stamina + " | ";
+              result += "🤺Characters " + account.characters.length + "</h3></div>";
               account.characters.forEach((character) => {
                 result += "<div class='characters'>";
                 result += "<h2 class='stats-title'>" + character.name;
@@ -56,79 +55,71 @@
                   IDAccount +
                   "&IDcharacter=" +
                   character.id +
-                  '">Look Fight History</a></button>';
+                  '">📊Look Fight History</a></button>';
                 result +=
                   '<button onClick="useStamina(' + character.id +
-                  ')"><h2>Use Stamina for fight</h2></button>';
+                  ')"><h2>⚔️Use Stamina for fight</h2></button>';
                 result += "<div class='character-stats'></li>";
                 result +=
-                  "<p>Level : " +
+                  "<p><strong>↗️Level :</strong> " +
                   character.level +
-                  " - Total Attack : " +
+                  " - <strong>🗡Total Attack : </strong>" +
                   character.totalAttack +
-                  "</p>";
+                  "</p><br>";
                 if (character.weaponEquipped === null)
-                  result += "<p>No Weapon Equipped</p>";
+                  result += "<p>❌ No Weapon Equipped</p>";
                 else {
-                  result += "<ul>";
-                  result += "<li>WeaponName : " + character.weaponEquipped.name;
+                  result += "<div class='character-weapon'><h2>WeaponName : " + character.weaponEquipped.name;
                   result +=
-                    "<br><button onClick='disarmCharacter(" +
+                    "</h2>";
+                  result +=
+                    "<p><strong>↗️WeaponLevel :</strong> " +
+                    character.weaponEquipped.level;
+                  result +=
+                    " | <strong>🗡WeaponAttack :</strong> " +
+                    character.weaponEquipped.attack;
+                  result += "</p><button onClick='disarmCharacter(" +
                     character.id +
-                    ")'><p>Disarm</p></button>";
-                  result += "</li>";
-                  result +=
-                    "<li>WeaponLevel : " +
-                    character.weaponEquipped.level +
-                    "</li>";
-                  result +=
-                    "<li>WeaponAttack : " +
-                    character.weaponEquipped.attack +
-                    "</li>";
-                  result += "</ul>";
+                    ")'><h2>❌Disarm</h2></button></div>";
                 }
                 result +=
                   "</div><button onClick='destroyCharacter(" +
                   character.id +
-                  ")'><h2>Destroy Character</h2></button>";
-                result += "</ul></div>";
+                  ")'><h2>🗑Destroy Character</h2></button>";
+                result += "</div>";
               });
   
               let weaponCounter = 0;
   
               result +=
-                "<hr><h3>Weapons Stored " + account.weaponsStored.length + "/25";
+                "<hr><h3>Weapons Stored " + account.weaponsStored.length + "/25</h3>";
               result +=
-                "&nbsp;&nbsp;&nbsp;<button onClick='changeSort()'>Sort Weapons "+sortArrow()+"</button>";
-              result += "</h3>";
+                "<button onClick='changeSort()'><h2>Sort Weapons "+sortArrow()+"</h2></button>";
               if (account.weaponsStored.length >= 25)
                 result += "<h4>Warning ! You will not gain new weapons !</h4>";
   
               account.weaponsStored.forEach((weapon) => {
-                result += "<ul>";
-                result += "<li>WeaponName : " + weapon.name;
-                result +=
-                  "&nbsp;&nbsp;&nbsp;<button onClick='equipTo(" +
+                result += "<div class='weapon'>";
+                result += "<h2 class='stats-title'>WeaponName : " + weapon.name;
+                result += "</h2><div class='weapon-stats'><p><strong>↗️WeaponLevel :</strong>" + weapon.level + 
+                "</p><p><strong>🗡WeaponAttack : </strong>" + weapon.attack + "</p></div><button onClick='equipTo(" +
                   weapon.id +
-                  ")'>Equip to :</button>";
+                  ")'><h2>Equip to :</h2></button>";
                 result += generateCharactersList(weapon.id, account);
-                result += "</li>";
-                result += "<li>WeaponLevel : " + weapon.level + "</li>";
-                result += "<li>WeaponAttack : " + weapon.attack + "</li>";
                 result +=
                   "<button onClick='destroyWeapon(" +
                   weaponCounter +
-                  ")'>Sell Weapon</button>";
-                result += "</ul><br>";
+                  ")'><h2>♻️Sell Weapon</h2></button>";
+                result += "</div><br>";
                 weaponCounter++;
               });
-              result += "</ul>";
+              result += "<hr>";
               if (account.characters.length < 3) {
-                result += '<div id="form">';
-                result += "<h3>Add a Character</h3>";
-                result += '<label for="name">Name</label> :';
-                result += '<input id="name" name="name" type="text" /> <br />';
-                result += '<button id="submit">Add a Character</button>';
+                result += "<h2 class='stats-title'>Add a Character</h2>";
+                result += '<div id="form" class="character-form">';
+                result += '<label for="name">Name:</label> :';
+                result += '<input id="name" name="name" type="text" class="send_button" /> <br />';
+                result += '<button id="submit"><h2>Add a Character<h2></button>';
                 result += "</div>";
               }
               $("#account").html(result);
@@ -259,6 +250,8 @@
         });
       </script>
     </section>
-    
+    <footer>
+      <h3>- Made by Nicolas Benoit -</h3>
+    </footer>
   </body>
 </html>

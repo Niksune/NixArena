@@ -1,36 +1,44 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <link rel="stylesheet" href="../assets/css/style.css">
     <meta charset="UTF-8">
     <title>NixArena</title>
 </head>
 <body>
-<h1>Admin</h1>
-<h3>Return to <a href="../index.html">Index</a></h3>
+<section>
+<h1 class="title">Admin</h1>
+<button><a href="../actual-game/choose_your_account.html">Return to Home</a></h3></button>
+<hr>
+<div class="admins">
+    <button><a href="add_account.html">Add a new account</a></button>
+    <button><a href="delete_accounts.html">Accounts Destructor</a></button>
+</div>
 
-<div><a href="add_account.html">Add a new account</a></div>
-<div><a href="delete_accounts.html">Accounts Destructor</a></div>
+<hr>
+<h2>jQuery API Calls</h2>
+<div class="admins">
+    <button><a href="all_accounts_info.html">All Accounts Info</a></button>
+    <button><a href="all_accounts_complete.html">All Accounts Completes</a></button>
+</div>
 
-<h3>jQuery API Calls</h3>
-
-<div><a href="all_accounts_info.html">All Accounts Info</a></div>
-<div><a href="all_accounts_complete.html">All Accounts Completes</a></div>
-
-<h3>API Calls</h3>
-
-<div><a href="../API/allAccountsAllCharacsWithEquippedWeapon">Get all accounts with characts with equipped weapons</a></div>
-<div><a href="../API/allAccountsWithCharacs">Get all accounts with characs (without weapons)</a></div>
-<div><a href="../API/allAccountsInfos">Get all accounts Infos</a></div>
-<div><a href="../API/accountInfos/2">Get the account ID = 2 Infos</a></div>
-<div><a href="../API/accountComplete/13">Get the account ID = 13 Complete</a></div>
-<div><a href="../API/allCharacs">Get all characters</a></div>
-<div><a href="../API/allCharacsWithWeapon">Get all characters and their weapon</a></div>
-<div><a href="../API/allCharacsWithOwner">Get all characters and their owners</a></div>
-<div><a href="../API/allCharacsWithFightingreports">Get all characters and their fighting reports</a></div>
-<div><a href="../API/mainScenario">Main Scenario for adding data</a></div>
-<div><a href="../API/makeWeapons">Create weapons and put them in BDD</a></div>
-<div><a href="../API/checkRead">Read tests</a></div>
-<div><a href="../API/fight-round">Fight Round</a></div>
-
+<hr>
+<h2>API Calls</h2>
+<div class="admins">
+    <button><a href="../API/allAccountsAllCharacsWithEquippedWeapon">Get all accounts with characts with equipped weapons</a></button>
+    <button><a href="../API/allAccountsWithCharacs">Get all accounts with characs (without weapons)</a></button>
+    <button><a href="../API/allAccountsInfos">Get all accounts Infos</a></button>
+    <button><a href="../API/accountInfos/2">Get the account ID = 2 Infos</a></button>
+    <button><a href="../API/accountComplete/13">Get the account ID = 13 Complete</a></button>
+    <button><a href="../API/allCharacs">Get all characters</a></button>
+    <button><a href="../API/allCharacsWithWeapon">Get all characters and their weapon</a></button>
+    <button><a href="../API/allCharacsWithOwner">Get all characters and their owners</a></button>
+    <button><a href="../API/allCharacsWithFightingreports">Get all characters and their fighting reports</a></button>
+    <button><a href="../API/mainScenario">Main Scenario for adding data</a></button>
+    <button><a href="../API/makeWeapons">Create weapons and put them in BDD</a></button>
+    <button><a href="../API/checkRead">Read tests</a></button>
+    <button><a href="../API/fight-round">Fight Round</a></button>
+</div>
+</section>
 </body>
 </html>
