@@ -38,4 +38,6 @@ public interface AccountRepositoryInterface extends JpaRepository<Account, UUID>
 //    Optional<Account> findByNameAndPassword(String name, String password);
 
     Optional<Account> findByName(String name);
+
+    int countByName(String name);
 }

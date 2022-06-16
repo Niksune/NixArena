@@ -10,6 +10,8 @@ import net.niksune.NixArena.Web.beans.Charac;
 import net.niksune.NixArena.Web.beans.Weapon;
 import net.niksune.NixArena.Web.services.CharacService;
 import net.niksune.NixArena.Web.services.FightOrganizerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/API")
 public class MainWebController {
+
+    Logger logger = LoggerFactory.getLogger(MainWebController.class);
 
     @Autowired
     private AccountRepositoryInterface accountRepositoryInterface;
@@ -148,11 +152,13 @@ public class MainWebController {
     // Others HTTP Requests
 
     @PostMapping("/accounts")
-    public int postAccount(@RequestBody Account account) {
-        System.out.println("Ajout de : " + account);
+    public String postAccount(@RequestBody Account account) {
+        if(accountRepositoryInterface.countByName(account.getName()) != 0)
+            return "AccountNameAlreadyExist";
+        logger.info("Ajout de : " + account);
         account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
         accountRepositoryInterface.save(account);
-        return 1;
+        return "OK";
     }
 
     @DeleteMapping("/accounts/{id}")
