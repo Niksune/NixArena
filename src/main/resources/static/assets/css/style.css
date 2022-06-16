@@ -144,7 +144,7 @@ button h2 {
     display: flex;
 }
 
-.title{
+.title, #messageTextSpecial{
     width: fit-content;
     margin: 0 auto;
 }
@@ -184,10 +184,11 @@ button h2 {
     margin: 2% 0;
 }
 
-.weapon, .character-weapon, .character-form, .admins{
+.weapon, .character-weapon, .character-form, .admins, .window-fight{
     width: 80%;
     border: 4px solid #11E5F7;
     margin: 2% auto;
+    padding: 2%;
 }
 
 .admins{
@@ -207,7 +208,7 @@ button h2 {
     width: 75%;
 }
 
-.character-stats, .weapon-stats{
+.character-stats, .weapon-stats {
     border: 4px dashed #11E5F7;
     padding: 2%;
     width: 85%;
@@ -231,4 +232,32 @@ button h2 {
 .weapon-stats:hover, .character-weapon:hover{
     transition: 0.5s;
     scale: 1.1;
+}
+
+.window-fight{
+    display: block;
+    width: 80%;
+    margin: 5% auto;
+}
+
+.window-buttons{
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+}
+
+.buttons-speeds, .window-buttons{
+    display: block;
+    margin: 1% auto;
+    text-align: center;
+}
+
+.atk{
+    z-index:2;
+    color: red; 
+    transition: 0.5s;
+    position: relative;
+    font-size: 3em;
+    font-family: Righteous;
+    text-shadow: 2px 0px 0px #000000, -2px 0px 0px #000000, 0px 2px 0px #000000, 0px -2px 0px #000000, 2px 2px 0px #000000, -2px -2px 0px #000000, -2px -2px 0px #000000;
 }
