@@ -11,6 +11,7 @@ import net.niksune.NixArena.Web.beans.Weapon;
 import net.niksune.NixArena.Web.services.CharacService;
 import net.niksune.NixArena.Web.services.FightOrganizerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -39,6 +40,9 @@ public class MainWebController {
 
     @Autowired
     private FightOrganizerService fightOrganizerService;
+
+    @Autowired
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     /* ---------SCENARIOS--------- */
@@ -126,12 +130,27 @@ public class MainWebController {
         return account;
     }
 
+    @PostMapping("/accounts/connection")
+    public UUID connection(@RequestBody ConnectionForm connectionForm) {
+        Optional<Account> account = accountRepositoryInterface.findByName(connectionForm.getName());
+
+        if (account.isEmpty())
+            return new UUID(0, 0);
+
+        if (bCryptPasswordEncoder.matches(connectionForm.getPassword(), account.get().getPassword()))
+            return account.get().getID();
+        else
+            return new UUID(0, 0);
+
+    }
+
 
     // Others HTTP Requests
 
     @PostMapping("/accounts")
     public int postAccount(@RequestBody Account account) {
         System.out.println("Ajout de : " + account);
+        account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
         accountRepositoryInterface.save(account);
         return 1;
     }
@@ -202,17 +221,6 @@ public class MainWebController {
 
 
     /* ---------INTERACTIONS--------- */
-
-    @PostMapping("/accounts/connection")
-    public UUID connection(@RequestBody ConnectionForm connectionForm) {
-        Optional<Account> account = accountRepositoryInterface.findByNameAndPassword(connectionForm.getName(), connectionForm.getPassword());
-
-        if(account.isEmpty())
-            return new UUID( 0 , 0 );
-        else
-            return account.get().getID();
-
-    }
 
     @PostMapping("/accounts/{id}/add-charac")
     public String addCharacToAccount(@PathVariable("id") String id, @RequestBody Charac charac) {

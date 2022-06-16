@@ -34,6 +34,8 @@ public interface AccountRepositoryInterface extends JpaRepository<Account, UUID>
     @EntityGraph(value="graph.Account.characters",type= EntityGraph.EntityGraphType.FETCH)
     Account getWithCharacsByName(String name);
 
-    @Query("SELECT a FROM Account a WHERE a.name = :name AND a.password = :password")
-    Optional<Account> findByNameAndPassword(String name, String password);
+//    @Query("SELECT a FROM Account a WHERE a.name = :name AND a.password = :password")
+//    Optional<Account> findByNameAndPassword(String name, String password);
+
+    Optional<Account> findByName(String name);
 }
