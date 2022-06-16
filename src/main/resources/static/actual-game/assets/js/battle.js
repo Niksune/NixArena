@@ -71,7 +71,7 @@ async function battle(attacker=character,defender=character,historyAttack){
         
         defender.img.style.scale=0.8;
         attacker.img.style.transform="rotate(360deg)";
-        attacker.img.style.scale=2;
+        attacker.img.style.scale=1.2;
         defender.img.style.filter="saturate(300%) blur(2px) brightness(1.25) contrast(60%)"
         
         defender.barHP.innerHTML= defender.currentHP+"/"+defender.maxHP+" <strong>HP</strong>";
@@ -103,7 +103,7 @@ async function battle(attacker=character,defender=character,historyAttack){
             break;
         }
         attacker.img.style.scale=0.8;
-        defender.img.style.scale=2;
+        defender.img.style.scale=1.2;
         defender.img.style.transform="rotate(360deg)";
         attacker.img.style.filter="saturate(300%) blur(2px) brightness(1.25) contrast(60%)"
 

@@ -253,7 +253,7 @@ button h2 {
 }
 
 .atk{
-    z-index:2;
+    z-index:3;
     color: red; 
     transition: 0.5s;
     position: relative;

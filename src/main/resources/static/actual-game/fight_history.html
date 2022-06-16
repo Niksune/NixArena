@@ -23,14 +23,14 @@
                     <div style="display: flex; flex-direction: row; margin: 0 auto;">
                         <div id="character" style="display: flex; flex-direction: column; margin: 0 auto 0 0;">
                             <p class="atk" id="character_atk"></p>
-                            <img id="character_img" style="width: 15em; transition: 0.5s;" src="assets/img/character.jpg" alt="">
+                            <img id="character_img" style="width: 15em; transition: 0.5s; margin: 10%;" src="assets/img/character.jpg" alt="">
                             <h2 id="character_name"></h2>
                             <h2 id="character_HP">00/00 HP</h2>
                             <h2 id="character_weapon">weapon: ???</h2>
                         </div>
                         <div id="enemy" style="display: flex; flex-direction: column; margin: 0 0 0 auto; text-align: right; object-position: right;">
                             <p class="atk" id="enemy_atk"></p>
-                            <img id="enemy_img"  style="width: 15em; transition: 0.5s; " src="assets/img/character.jpg" alt="">
+                            <img id="enemy_img"  style=" margin: 10%; width: 15em; transition: 0.5s; " src="assets/img/character.jpg" alt="">
                             <h2 id="enemy_name"></h2>
                             <h2 id="enemy_HP">00/00 HP</h2>
                             <h2 id="enemy_weapon">weapon: ???</h2>
@@ -42,13 +42,13 @@
                         <button type="checkbox" onclick="changeSpeed('fast')" name="speed_battle[]" class="speed_button" value="fast"><h2>Fast</h2></button>
                     </div>
                 </div>
-                <div class="window-buttons">
+                <div class="window-buttons" style="margin: 0 auto 0 auto;">
                     <button id="button_play" onclick="play()"><h2>Play</h2></button>
                     <button onclick="skip()" class="speed_button"><h2>Skip</h2></button>
                     <button id="button_sound" onclick="withSound()"><h2>🔊</h2></button>
                 </div>
             </div>
-            <div style="display: flex; flex-direction: column;">
+            <div style="display: flex; flex-direction: column; margin: 0 auto 0 auto;">
                 <h2 id="labelFight" style="display: flex; margin: 0 auto;" >0/0</h2>
                 <div style="display: flex; flex-direction: row;  margin: 0 auto;">
                     <button onclick="changeFight('previous')"><h2>◄</h2></button>
