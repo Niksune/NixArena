@@ -14,9 +14,22 @@
 }
 
 h1,h2,h3,h4,label {
-    font-size: 3em;
     color: white;
     font-family: Righteous;
+}
+
+p {
+    color: white;
+    font-family: Ubuntu-light;
+    font-size: 1.2em;
+}
+
+a {
+    font-size: 2em;
+    width: fit-content;
+    color: white;
+    font-family: Righteous;
+    text-decoration: none;
 }
 
 .characters a {
@@ -36,7 +49,7 @@ input{
 }
 
 h1{
-    font-size: 3em; 
+    font-size: 2.5em; 
 }
 
 h2{
@@ -47,17 +60,13 @@ h3{
     font-size: 1.5em;
 }
 
-p {
-    color: white;
-    font-family: Ubuntu-light;
-}
 body {
     background-color: #400022;
 }
 
 header {
     width: 100%;
-    height: 4em;
+    height: 3em;
     background: #F798F6;
     box-shadow: 0px 0px 30px 10px rgba(247, 152, 246, 0.25);
     margin: 0 0 2% 0;
@@ -112,20 +121,12 @@ button:hover {
     transition: 0.5s;
 }
 
-a {
-    font-size: 3em;
-    width: fit-content;
-    color: white;
-    font-family: Righteous;
-    text-decoration: none;
-}
-
 button a {
-    padding: 0 3em;
+    padding: 0 1em;
 }
 
 button h2 {
-    padding: 0 3em;
+    padding: 0 1em;
 }
 
 .input-login{
@@ -261,3 +262,42 @@ button h2 {
     font-family: Righteous;
     text-shadow: 2px 0px 0px #000000, -2px 0px 0px #000000, 0px 2px 0px #000000, 0px -2px 0px #000000, 2px 2px 0px #000000, -2px -2px 0px #000000, -2px -2px 0px #000000;
 }
+
+.window-tutorial{
+    border: 4px dashed #11E5F7;
+    padding: 2%;
+    width: 85%;
+    margin: 0 auto;
+    background-color: #16000d;
+    transition: 0.2s;
+    text-align: center;
+    margin-top: 2%;   
+}
+
+.window-tutorial img{
+    display: flex;
+    position: relative;
+    object-fit: cover;
+    width: 100%;
+    margin: 0 0 4% 0;
+    transition: 0.3s;
+}
+
+.window-tutorial img:hover{
+    scale: 1.05;
+    transition: 0.5s;
+}
+
+.buttons-tutorial {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+}
+
+.buttons-tutorial div{
+    padding: 0 15%;
+    display: contents;
+    flex-direction: row;
+}
+
