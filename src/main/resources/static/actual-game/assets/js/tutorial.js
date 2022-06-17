@@ -10,6 +10,7 @@ window.onload = ()=>{
     };
 
     divTuto[index].style.display="block";
+    buttonPlay.style.opacity="0.2";
     
 }
 
@@ -21,10 +22,14 @@ function changeTuto(value){
                 index++;
                 divTuto[index].style.display="block";
             }
+            if(index == divTuto.length-1){
+                buttonPlay.style.opacity="1";
+            }
             console.log(index);
             break;
         case("preveous"):
             if (index > 0){
+                buttonPlay.style.opacity="0.2";
                 divTuto[index].style.display="none"
                 index--;
                 divTuto[index].style.display="block";
