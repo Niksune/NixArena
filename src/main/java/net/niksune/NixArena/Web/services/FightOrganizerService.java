@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 @Service
 public class FightOrganizerService {
@@ -65,7 +66,7 @@ public class FightOrganizerService {
     }
 
     @Transactional
-    public int manualFight(int id) {
+    public int manualFight(UUID id) {
         List<Charac> allCharacters = characRepositoryInterface.findAllByOrderByLevelAsc();
         Charac player = characRepositoryInterface.getById(id);
 

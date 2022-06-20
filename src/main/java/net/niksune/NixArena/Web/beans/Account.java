@@ -27,6 +27,8 @@ public class Account {
     private UUID ID;
     private String name;
     private String password;
+
+    private String mail;
     private int gold = 0;
     private int stamina = 5;
     @JsonProperty("characters")
@@ -68,6 +70,14 @@ public class Account {
     public Account(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 
     public int getGold() {

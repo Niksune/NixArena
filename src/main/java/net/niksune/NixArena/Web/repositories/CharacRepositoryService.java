@@ -62,7 +62,7 @@ public class CharacRepositoryService {
     }
 
     @Transactional
-    public Boolean useStamina(int idCharac){
+    public Boolean useStamina(UUID idCharac){
         Charac charac = characRepositoryInterface.getById(idCharac);
         Account account = charac.getOwnerAccount();
 

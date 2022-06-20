@@ -158,7 +158,7 @@ public class MainWebController {
         logger.info("Ajout de : " + account);
         account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
         accountRepositoryInterface.save(account);
-        return "OK";
+        return String.valueOf(account.getID());
     }
 
     @DeleteMapping("/accounts/{id}")
@@ -219,8 +219,8 @@ public class MainWebController {
 
     @PatchMapping("/characs/{id}/usestamina")
     public int manualFightCharac(@PathVariable("id") String id) {
-        if (characRepositoryService.useStamina(Integer.parseInt(id))) {
-            fightOrganizerService.manualFight(Integer.parseInt(id));
+        if (characRepositoryService.useStamina(UUID.fromString(id))) {
+            fightOrganizerService.manualFight(UUID.fromString(id));
             return (1);
         }
         return (0);
