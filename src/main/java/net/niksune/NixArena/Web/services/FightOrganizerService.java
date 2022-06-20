@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class FightOrganizerService {
@@ -62,7 +64,61 @@ public class FightOrganizerService {
         return 1;
     }
 
+    @Transactional
+    public int manualFight(int id) {
+        List<Charac> allCharacters = characRepositoryInterface.findAllByOrderByLevelAsc();
+        Charac player = characRepositoryInterface.getById(id);
 
+        //Loop to get characters weaker than the player
+        while (true){
+            //Lists to get characters in function our level
+            List<Charac> lowLevel = new ArrayList<>();
+            List<Charac> sameLevel = new ArrayList<>();
+
+            for(Charac chara:allCharacters) {
+                if (chara.getID() == player.getID()){
+                    ;
+                }else if (chara.getLevel() == player.getLevel()){
+                    sameLevel.add(chara);
+                }else if (chara.getLevel() < player.getLevel()) {
+                    lowLevel.add(chara);
+                }
+            }
+
+            //re-assigns characters in allCharacters
+            allCharacters.clear();
+            if (sameLevel.size()>0) {
+                allCharacters = sameLevel;
+            }else {
+                allCharacters = lowLevel;
+            }
+            break;
+            }
+
+        Random rand = new Random();
+        int sizeNumber = allCharacters.size();
+        int randomNumber = rand.nextInt(sizeNumber);
+
+        Charac charac1 = player;
+        Charac charac2 = allCharacters.get(randomNumber);
+
+        int result = fightingService.duel(charac1, charac2);
+        if (result == 1) {
+            victory(charac1);
+            lose(charac2);
+        } else if (result == 2 && charac1.getLevel() == charac2.getLevel()) {
+            lose(charac1);
+            victory(charac2);
+        }
+        //That means that a more leveled character won
+        //By the rule of orders charac1 is always less leveled or egal than charac2
+        else if (result == 2 && charac1.getLevel() != charac2.getLevel()) {
+            lose(charac1);
+            victoryOutLevel(charac2);
+            };
+
+        return 1;
+    }
 
     public void victory(Charac charac) {
         charac.levelUp();

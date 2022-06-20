@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="../assets/css/style.css">
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nix Arena</title>
   </head>
+  
   <body>
-    <h1>Choose your Account !</h1>
-    <h3>Return to <a href="../index.html">Index</a></h3>
-    <div id="allAccounts"></div>
+    <header>
+      <div id="header-menu">
+        <a href="../actual-game/choose_your_account.html">Home</a>
+        <a href="../admin/index.html">Admin</a>
+      </div>
+    </header>
 
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        $.get(
-          "../API/allAccountsInfos",
-          function (response, status) {
-            let result = "";
-            response.forEach((account) => {
-              console.log(account);
-              result += "<ul>";
-              result += "<li><a href='manage_account.html?IDaccount="+ account.id +"'>" + account.name + "</a></li>";
-              result += "</ul>";
-            });
-            $("#allAccounts").html(result);
-          }
-        );
-      });
-    </script>
+    <section>
+      <h1 class="title">Choose your account</h1>
+      <div id="allAccounts"></div>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+        <script>
+          $(document).ready(function () {
+            $.get(
+              "../API/allAccountsInfos",
+              function (response, status) {
+                let result = "";
+                result +="<ul>";
+                response.forEach((account) => {
+                  console.log(account);
+                  result += "<li><button><a href='manage_account.html?IDaccount="+ account.id +"'>" + account.name + "</a></button></li>";
+                });
+                result +="</ul>";
+                $("#allAccounts").html(result);
+              }
+            );
+          });
+        </script>
+    </section>
+    
+<footer>
+  <h3>- Made by Nicolas Benoit -</h3>
+</footer>
+
   </body>
 </html>

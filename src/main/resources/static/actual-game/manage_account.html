@@ -3,232 +3,255 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="../assets/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nix Arena</title>
   </head>
+
   <body>
-    <h1>Manage Account</h1>
-    <h3>Return to <a href="../index.html">Index</a></h3>
-    <h3>Return to <a href="choose_your_account.html">Account Selection</a></h3>
-    <h3>All Accounts Infos :</h3>
-    <div id="account"></div>
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
-    <script>
-      const urlParams = new URLSearchParams(window.location.search);
-      if (!urlParams.has("IDaccount")) {
-        window.location.href = "/index.html";
-      }
-
-      const IDAccount = urlParams.get("IDaccount");
-
-      //0 : acquisition order, 1 : strongest to weakest, 2 : weakest to strongest
-      let sortWeapons = 0;
-
-      function loadAccount() {
-        $.get(
-          "../API/accountComplete/" + IDAccount + "/" + sortWeapons,
-          function (account, status) {
-            console.log(account);
-            let result = "";
-            let numberMain = account.numberMain;
-
-            result += "<ul>";
-            result += "<li>Name : " + account.name + "</li>";
-            result += "<li>Mdp : " + account.password + "</li>";
-            result += "<li>Gold : " + account.gold + "</li>";
-            result += "<h3>Characters " + account.characters.length + "/3</h3>";
-            account.characters.forEach((character) => {
-              result += "<ul>";
-              result += "<li>Name : " + character.name;
-              result +=
-                '&nbsp;&nbsp;&nbsp;<a href="fight_history.html?IDaccount=' +
-                IDAccount +
-                "&IDcharacter=" +
-                character.id +
-                '"><button>Look Fight History</button></a>';
-              result += "</li>";
-              result +=
-                "<li>Level : " +
-                character.level +
-                " - Total Attack : " +
-                character.totalAttack +
-                "</li>";
-              if (character.weaponEquipped === null)
-                result += "<li>No Weapon Equipped</li>";
-              else {
-                result += "<ul>";
-                result += "<li>WeaponName : " + character.weaponEquipped.name;
+    <header>
+      <div id="header-menu">
+        <a href="../actual-game/choose_your_account.html">Home</a>
+        <a href="../admin/index.html">Admin</a>
+      </div>
+    </header>
+    
+    <section>
+      <h1 class="title">Manage Account</h1>
+      
+      <div id="account"></div>
+      
+      <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+      <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (!urlParams.has("IDaccount")) {
+          window.location.href = "/index.html";
+        }
+  
+        const IDAccount = urlParams.get("IDaccount");
+  
+        //0 : acquisition order, 1 : strongest to weakest, 2 : weakest to strongest
+        let sortWeapons = 0;
+  
+        function loadAccount() {
+          $.get(
+            "../API/accountComplete/" + IDAccount + "/" + sortWeapons,
+            function (account, status) {
+              console.log(account);
+              let result = "";
+              let numberMain = account.numberMain;
+  
+              result += "<div class='stats'><h3>";
+              result += "Name : " + account.name + " | ";
+              result += "Mdp : " + account.password + " | ";
+              result += "🪙Gold : " + account.gold + " | ";
+              result += "💊Stamina : " + account.stamina + " | ";
+              result += "🤺Characters " + account.characters.length + "</h3></div>";
+              account.characters.forEach((character) => {
+                result += "<div class='characters'>";
+                result += "<h2 class='stats-title'>" + character.name;
                 result +=
-                  "&nbsp;&nbsp;&nbsp;<button onClick='disarmCharacter(" +
+                  '</h2><button><a href="fight_history.html?IDaccount=' +
+                  IDAccount +
+                  "&IDcharacter=" +
                   character.id +
-                  ")'>Disarm</button>";
-                result += "</li>";
+                  '">📊Look Fight History</a></button>';
                 result +=
-                  "<li>WeaponLevel : " +
-                  character.weaponEquipped.level +
-                  "</li>";
+                  '<button onClick="useStamina(' + character.id +
+                  ')"><h2>⚔️Use Stamina for fight</h2></button>';
+                result += "<div class='character-stats'></li>";
                 result +=
-                  "<li>WeaponAttack : " +
-                  character.weaponEquipped.attack +
-                  "</li>";
-                result += "</ul>";
+                  "<p><strong>↗️Level :</strong> " +
+                  character.level +
+                  " - <strong>🗡Total Attack : </strong>" +
+                  character.totalAttack +
+                  "</p><br>";
+                if (character.weaponEquipped === null)
+                  result += "<p>❌ No Weapon Equipped</p>";
+                else {
+                  result += "<div class='character-weapon'><h2>WeaponName : " + character.weaponEquipped.name;
+                  result +=
+                    "</h2>";
+                  result +=
+                    "<p><strong>↗️WeaponLevel :</strong> " +
+                    character.weaponEquipped.level;
+                  result +=
+                    " | <strong>🗡WeaponAttack :</strong> " +
+                    character.weaponEquipped.attack;
+                  result += "</p><button onClick='disarmCharacter(" +
+                    character.id +
+                    ")'><h2>❌Disarm</h2></button></div>";
+                }
+                result +=
+                  "</div><button onClick='destroyCharacter(" +
+                  character.id +
+                  ")'><h2>🗑Destroy Character</h2></button>";
+                result += "</div>";
+              });
+  
+              let weaponCounter = 0;
+  
+              result +=
+                "<hr><h3>Weapons Stored " + account.weaponsStored.length + "/25</h3>";
+              result +=
+                "<button onClick='changeSort()'><h2>Sort Weapons "+sortArrow()+"</h2></button>";
+              if (account.weaponsStored.length >= 25)
+                result += "<h4>Warning ! You will not gain new weapons !</h4>";
+  
+              account.weaponsStored.forEach((weapon) => {
+                result += "<div class='weapon'>";
+                result += "<h2 class='stats-title'>WeaponName : " + weapon.name;
+                result += "</h2><div class='weapon-stats'><p><strong>↗️WeaponLevel :</strong>" + weapon.level + 
+                "</p><p><strong>🗡WeaponAttack : </strong>" + weapon.attack + "</p></div><button onClick='equipTo(" +
+                  weapon.id +
+                  ")'><h2>Equip to :</h2></button>";
+                result += generateCharactersList(weapon.id, account);
+                result +=
+                  "<button onClick='destroyWeapon(" +
+                  weaponCounter +
+                  ")'><h2>♻️Sell Weapon</h2></button>";
+                result += "</div><br>";
+                weaponCounter++;
+              });
+              result += "<hr>";
+              if (account.characters.length < 3) {
+                result += "<h2 class='stats-title'>Add a Character</h2>";
+                result += '<div id="form" class="character-form">';
+                result += '<label for="name">Name:</label> :';
+                result += '<input id="name" name="name" type="text" class="send_button" /> <br />';
+                result += '<button id="submit"><h2>Add a Character<h2></button>';
+                result += "</div>";
               }
-              result +=
-                "<button onClick='destroyCharacter(" +
-                character.id +
-                ")'>Destroy Character</button>";
-              result += "</ul><br>";
-            });
-
-            let weaponCounter = 0;
-
-            result +=
-              "<h3>Weapons Stored " + account.weaponsStored.length + "/25";
-            result +=
-              "&nbsp;&nbsp;&nbsp;<button onClick='changeSort()'>Sort Weapons "+sortArrow()+"</button>";
-            result += "</h3>";
-            if (account.weaponsStored.length >= 25)
-              result += "<h4>Warning ! You will not gain new weapons !</h4>";
-
-            account.weaponsStored.forEach((weapon) => {
-              result += "<ul>";
-              result += "<li>WeaponName : " + weapon.name;
-              result +=
-                "&nbsp;&nbsp;&nbsp;<button onClick='equipTo(" +
-                weapon.id +
-                ")'>Equip to :</button>";
-              result += generateCharactersList(weapon.id, account);
-              result += "</li>";
-              result += "<li>WeaponLevel : " + weapon.level + "</li>";
-              result += "<li>WeaponAttack : " + weapon.attack + "</li>";
-              result +=
-                "<button onClick='destroyWeapon(" +
-                weaponCounter +
-                ")'>Sell Weapon</button>";
-              result += "</ul><br>";
-              weaponCounter++;
-            });
-            result += "</ul>";
-            if (account.characters.length < 3) {
-              result += '<div id="form">';
-              result += "<h3>Add a Character</h3>";
-              result += '<label for="name">Name</label> :';
-              result += '<input id="name" name="name" type="text" /> <br />';
-              result += '<button id="submit">Add a Character</button>';
-              result += "</div>";
+              $("#account").html(result);
             }
-            $("#account").html(result);
-          }
-        ).then(() => $("#submit").click(addCharacter));
-      }
-
-      function changeSort() {
-        if(sortWeapons == 0 || sortWeapons == 2)
-          sortWeapons = 1;
-        else
-          sortWeapons = 2;
-        loadAccount();
-      }
-
-      function sortArrow() {
-        if(sortWeapons == 1)
-          return "↓";
-        else if(sortWeapons == 2)
-          return "↑";
-        else
-          return "";
-      }
-
-      function generateCharactersList(idWeapon, account) {
-        res = '<select id="selectMenu' + idWeapon + '">';
-        let characterNumber = 0;
-        account.characters.forEach((character) => {
-          res +=
-            '<option value="' +
-            characterNumber +
-            '">' +
-            character.name +
-            "</option>";
-          characterNumber++;
+          ).then(() => $("#submit").click(addCharacter));
+        }
+  
+        function changeSort() {
+          if(sortWeapons == 0 || sortWeapons == 2)
+            sortWeapons = 1;
+          else
+            sortWeapons = 2;
+          loadAccount();
+        }
+  
+        function sortArrow() {
+          if(sortWeapons == 1)
+            return "↓";
+          else if(sortWeapons == 2)
+            return "↑";
+          else
+            return "";
+        }
+  
+        function generateCharactersList(idWeapon, account) {
+          res = '<select id="selectMenu' + idWeapon + '">';
+          let characterNumber = 0;
+          account.characters.forEach((character) => {
+            res +=
+              '<option value="' +
+              characterNumber +
+              '">' +
+              character.name +
+              "</option>";
+            characterNumber++;
+          });
+          res += "</select>";
+  
+          return res;
+        }
+  
+        function useStamina(id){
+          $.ajax({
+            type: "PATCH",
+            url: "../API/characs/" + id + "/usestamina",
+            success: function (result) {
+              if (result == 1){
+                alert("You are go in arena!");
+                loadAccount()
+              } else{
+              alert("You dont have any stamina!");
+            }}
+          }); 
+        }
+  
+        function addCharacter() {
+          let values = { name: $("#name").val() };
+          //console.log(values);
+          $.ajax({
+            type: "POST",
+            headers: { "Content-Type": "application/json" },
+            url: "../API/accounts/" + IDAccount + "/add-charac",
+            data: JSON.stringify(values),
+            success: function (result) {
+              if (result == "TooManyCharacters")
+                alert("You can't have more than 3 characters on each account");
+              loadAccount();
+            },
+          });
+        }
+  
+        function destroyCharacter(IDCharacter) {
+          $.ajax({
+            type: "DELETE",
+            url: "../API/characs/" + IDCharacter,
+            success: function () {
+              loadAccount();
+            },
+          });
+        }
+  
+        function destroyWeapon(numberWeapon) {
+          let values = { numberWeapon: numberWeapon };
+          $.ajax({
+            type: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            url: "../API/accounts/" + IDAccount + "/weapons",
+            data: JSON.stringify(values),
+            success: function () {
+              loadAccount();
+            },
+          });
+        }
+  
+        function equipTo(idWeapon) {
+          let values = {
+            idWeapon: idWeapon,
+            characterNumber: $("#selectMenu" + idWeapon)
+              .children("option:selected")
+              .val(),
+          };
+          console.log(values);
+          $.ajax({
+            type: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            url: "../API/accounts/" + IDAccount + "/equip-to",
+            data: JSON.stringify(values),
+            success: function (result) {
+              if (result == "LevelTooLow")
+                alert("You can't equip a weapon that outlevel your character");
+              loadAccount();
+            },
+          });
+        }
+  
+        function disarmCharacter(idCharacter) {
+          $.ajax({
+            type: "PATCH",
+            url: "../API/disarm-charac/" + idCharacter,
+            success: function (result) {
+              loadAccount();
+            },
+          });
+        }
+  
+        $(document).ready(function () {
+          loadAccount();
         });
-        res += "</select>";
-
-        return res;
-      }
-
-      function addCharacter() {
-        let values = { name: $("#name").val() };
-        //console.log(values);
-        $.ajax({
-          type: "POST",
-          headers: { "Content-Type": "application/json" },
-          url: "../API/accounts/" + IDAccount + "/add-charac",
-          data: JSON.stringify(values),
-          success: function (result) {
-            if (result == "TooManyCharacters")
-              alert("You can't have more than 3 characters on each account");
-            loadAccount();
-          },
-        });
-      }
-
-      function destroyCharacter(IDCharacter) {
-        $.ajax({
-          type: "DELETE",
-          url: "../API/characs/" + IDCharacter,
-          success: function () {
-            loadAccount();
-          },
-        });
-      }
-
-      function destroyWeapon(numberWeapon) {
-        let values = { numberWeapon: numberWeapon };
-        $.ajax({
-          type: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          url: "../API/accounts/" + IDAccount + "/weapons",
-          data: JSON.stringify(values),
-          success: function () {
-            loadAccount();
-          },
-        });
-      }
-
-      function equipTo(idWeapon) {
-        let values = {
-          idWeapon: idWeapon,
-          characterNumber: $("#selectMenu" + idWeapon)
-            .children("option:selected")
-            .val(),
-        };
-        console.log(values);
-        $.ajax({
-          type: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          url: "../API/accounts/" + IDAccount + "/equip-to",
-          data: JSON.stringify(values),
-          success: function (result) {
-            if (result == "LevelTooLow")
-              alert("You can't equip a weapon that outlevel your character");
-            loadAccount();
-          },
-        });
-      }
-
-      function disarmCharacter(idCharacter) {
-        $.ajax({
-          type: "PATCH",
-          url: "../API/disarm-charac/" + idCharacter,
-          success: function (result) {
-            loadAccount();
-          },
-        });
-      }
-
-      $(document).ready(function () {
-        loadAccount();
-      });
-    </script>
+      </script>
+    </section>
+    <footer>
+      <h3>- Made by Nicolas Benoit -</h3>
+    </footer>
   </body>
 </html>

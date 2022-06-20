@@ -31,7 +31,7 @@ public class Charac {
     @JsonIgnoreProperties("characters")
     private Account ownerAccount;
     private int totalAttack = 10;
-    @ManyToMany(fetch = FetchType.LAZY,
+    @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<FightingReport> fightingReports = new ArrayList<>();
 
