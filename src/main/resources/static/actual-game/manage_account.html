@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nix Arena</title>
   </head>
-
   <body>
     <header>
       <div id="header-menu">
@@ -15,24 +14,24 @@
         <a href="../admin/index.html">Admin</a>
       </div>
     </header>
-    
+
     <section>
       <h1 class="title">Manage Account</h1>
-      
+
       <div id="account"></div>
-      
+
       <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
       <script>
         const urlParams = new URLSearchParams(window.location.search);
         if (!urlParams.has("IDaccount")) {
           window.location.href = "/index.html";
         }
-  
+
         const IDAccount = urlParams.get("IDaccount");
-  
+
         //0 : acquisition order, 1 : strongest to weakest, 2 : weakest to strongest
         let sortWeapons = 0;
-  
+
         function loadAccount() {
           $.get(
             "../API/accountComplete/" + IDAccount + "/" + sortWeapons,
@@ -40,7 +39,7 @@
               console.log(account);
               let result = "";
               let numberMain = account.numberMain;
-  
+
               result += "<div class='stats'><h3>";
               result += "Name : " + account.name + " | ";
               result += "Mdp : " + account.password + " | ";
@@ -88,20 +87,20 @@
                   ")'><h2>🗑Destroy Character</h2></button>";
                 result += "</div>";
               });
-  
+
               let weaponCounter = 0;
-  
+
               result +=
                 "<hr><h3>Weapons Stored " + account.weaponsStored.length + "/25</h3>";
               result +=
                 "<button onClick='changeSort()'><h2>Sort Weapons "+sortArrow()+"</h2></button>";
               if (account.weaponsStored.length >= 25)
                 result += "<h4>Warning ! You will not gain new weapons !</h4>";
-  
+
               account.weaponsStored.forEach((weapon) => {
                 result += "<div class='weapon'>";
                 result += "<h2 class='stats-title'>WeaponName : " + weapon.name;
-                result += "</h2><div class='weapon-stats'><p><strong>↗️WeaponLevel :</strong>" + weapon.level + 
+                result += "</h2><div class='weapon-stats'><p><strong>↗️WeaponLevel :</strong>" + weapon.level +
                 "</p><p><strong>🗡WeaponAttack : </strong>" + weapon.attack + "</p></div><button onClick='equipTo(" +
                   weapon.id +
                   ")'><h2>Equip to :</h2></button>";
@@ -126,7 +125,7 @@
             }
           ).then(() => $("#submit").click(addCharacter));
         }
-  
+
         function changeSort() {
           if(sortWeapons == 0 || sortWeapons == 2)
             sortWeapons = 1;
@@ -134,7 +133,7 @@
             sortWeapons = 2;
           loadAccount();
         }
-  
+
         function sortArrow() {
           if(sortWeapons == 1)
             return "↓";
@@ -143,7 +142,7 @@
           else
             return "";
         }
-  
+
         function generateCharactersList(idWeapon, account) {
           res = '<select id="selectMenu' + idWeapon + '">';
           let characterNumber = 0;
@@ -157,10 +156,10 @@
             characterNumber++;
           });
           res += "</select>";
-  
+
           return res;
         }
-  
+
         function useStamina(id){
           $.ajax({
             type: "PATCH",
@@ -172,9 +171,9 @@
               } else{
               alert("You dont have any stamina!");
             }}
-          }); 
+          });
         }
-  
+
         function addCharacter() {
           let values = { name: $("#name").val() };
           //console.log(values);
@@ -190,7 +189,7 @@
             },
           });
         }
-  
+
         function destroyCharacter(IDCharacter) {
           $.ajax({
             type: "DELETE",
@@ -200,7 +199,7 @@
             },
           });
         }
-  
+
         function destroyWeapon(numberWeapon) {
           let values = { numberWeapon: numberWeapon };
           $.ajax({
@@ -213,7 +212,7 @@
             },
           });
         }
-  
+
         function equipTo(idWeapon) {
           let values = {
             idWeapon: idWeapon,
@@ -234,7 +233,7 @@
             },
           });
         }
-  
+
         function disarmCharacter(idCharacter) {
           $.ajax({
             type: "PATCH",
@@ -244,7 +243,7 @@
             },
           });
         }
-  
+
         $(document).ready(function () {
           loadAccount();
         });

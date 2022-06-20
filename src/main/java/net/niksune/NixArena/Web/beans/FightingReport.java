@@ -7,6 +7,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class FightingReport {
@@ -18,8 +19,8 @@ public class FightingReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID = 0;
     private String specialText;
-    private int charac1ID;
-    private int charac2ID;
+    private UUID charac1ID;
+    private UUID charac2ID;
     private String charac1Name;
     private String charac2Name;
     private int charac1Level;
@@ -31,7 +32,7 @@ public class FightingReport {
     @ElementCollection
     private List<Integer> attacks = new ArrayList<>();
 
-    public FightingReport(int charac1ID, int charac2ID, String charac1Name, String charac2Name, int charac1Level, int charac2Level) {
+    public FightingReport(UUID charac1ID, UUID charac2ID, String charac1Name, String charac2Name, int charac1Level, int charac2Level) {
         this.charac1ID = charac1ID;
         this.charac2ID = charac2ID;
         this.charac1Name = charac1Name;
@@ -47,11 +48,11 @@ public class FightingReport {
     public FightingReport() {
     }
 
-    public int getCharac1ID() {
+    public UUID getCharac1ID() {
         return charac1ID;
     }
 
-    public int getCharac2ID() {
+    public UUID getCharac2ID() {
         return charac2ID;
     }
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Connection</title>
+</head>
+<body>
+<h1>Test Connection</h1>
+<h3>Return to <a href="../index.html">Index</a></h3>
+<h3>Form :</h3>
+<div id="form"></div>
+
+<label for="name">Name</label> :
+<input id="name" name="name" type="text" /> <br />
+<label for="password">Password</label> :
+<input id="password" name="password" type="text" /> <br />
+<button id="submit">Connection</button>
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+<script>
+      $("#submit").click(function () {
+        let values = { name : $("#name").val(), password : $("#password").val() };
+        console.log(values);
+        $.ajax({
+          type: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          url: "../API/accounts/connection",
+          data: JSON.stringify(values),
+          success: function (result) {
+            if(result === "00000000-0000-0000-0000-000000000000")
+              alert("Bad identifiers");
+            else
+              alert("Connected with ID : "+result);
+          },
+        });
+      });
+    </script>
+</body>
+</html>

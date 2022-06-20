@@ -29,8 +29,13 @@
           headers: { 'Content-Type': 'application/json' },
           url: "../API/accounts",
           data: JSON.stringify(values),
-          success: function () {
-            alert("Account "+$("#name").val()+" Created !");
+          success: function (result) {
+            if(result === "OK")
+              alert("Account "+$("#name").val()+" Created !");
+            else if(result === "AccountNameAlreadyExist")
+              alert("Account already exists");
+            else
+              alert("Unknown error");
           },
         });
       });

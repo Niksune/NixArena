@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CharacRepositoryService {
@@ -19,7 +20,7 @@ public class CharacRepositoryService {
     private CharacRepositoryInterface characRepositoryInterface;
 
     @Transactional
-    public void destroyCharacAndRetrieveWeapon(int idCharac){
+    public void destroyCharacAndRetrieveWeapon(UUID idCharac){
 
         Charac charac = characRepositoryInterface.findCompleteByID(idCharac);
 
@@ -45,7 +46,7 @@ public class CharacRepositoryService {
     }
 
     @Transactional
-    public Charac findWithFightingreportsById(int idCharac) {
+    public Charac findWithFightingreportsById(UUID idCharac) {
 
         Charac charac = characRepositoryInterface.findById(idCharac).get();
 

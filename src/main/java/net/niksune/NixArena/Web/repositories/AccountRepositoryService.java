@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 public class AccountRepositoryService {
 
@@ -24,7 +26,7 @@ public class AccountRepositoryService {
     //But 1/I want a list, 2/I add a problem : the list loaded the same number of items than in the set, even if in the DB it wasn't the same number
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @Transactional
-    public Account findCompleteByID(int ID) {
+    public Account findCompleteByID(UUID ID) {
 
         Account account = accountRepositoryInterface.getById(ID);
 
@@ -41,7 +43,7 @@ public class AccountRepositoryService {
     }
 
     @Transactional
-    public String assignWeaponToChar(int idAccount, int weaponID, int numChar){
+    public String assignWeaponToChar(UUID idAccount, int weaponID, int numChar){
 
         Account account = accountRepositoryInterface.getById(idAccount);
         Weapon weaponToSwap = weaponRepositoryInterface.getById(weaponID);
@@ -72,7 +74,7 @@ public class AccountRepositoryService {
     }
 
     @Transactional
-    public String disarmCharac(int idCharac){
+    public String disarmCharac(UUID idCharac){
 
         Charac charac = characRepositoryInterface.getById(idCharac);
         Account account = charac.getOwnerAccount();
