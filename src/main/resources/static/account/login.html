@@ -13,18 +13,37 @@
     <section>
         <div class="input-login">
             <div>
-                <label for="identifiant">Your identifiant</label>
-                <input type="login" name="identifiant" id="identifiant">
+                <label for="login">Your identifiant</label>
+                <input type="login" name="login" id="login">
             </div>
             <div>
                 <label for="password">Your password</label>
                 <br>
                 <input type="password" name="password" id="password">
             </div>
-            <button><a href="">login</a></button>
+            <button id="submit">login</button>
             <button><a href="../index.html">back</a></button>
         </div>
         
     </section>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+    <script>
+      $("#submit").click(function () {
+        let values = { name : $("#login").val(), password : $("#password").val() };
+        console.log(values);
+        $.ajax({
+          type: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          url: "../API/accounts/connection",
+          data: JSON.stringify(values),
+          success: function (result) {
+            if(result === "00000000-0000-0000-0000-000000000000")
+              alert("Wrong identifiers");
+            else
+              document.location.href="../actual-game/manage_account.html?IDaccount="+result;
+          },
+        });
+      });
+    </script>
 </body>
 </html>
