@@ -141,8 +141,16 @@ window.onload = () => {
     
     $.get(requestURL, (data) => {
         fightingReport = data;
-        indexFight = data['fightingReports'].length - 1;
-        changeFight();
+        if (data['fightingReports'].length < 1 || data==null){
+            document.getElementById('messageTextSpecial').style.display="block";
+            document.getElementById('messageTextSpecial').innerText = ("No fight.");
+            document.getElementById('play-fight').style.display="none";
+        } else{
+            indexFight = data['fightingReports'].length - 1;
+            changeFight();
+        }
+
+        
     });
     
 }
@@ -295,5 +303,18 @@ function withSound(){
     } else {
         sounds=true;
         document.getElementById('button_sound').innerHTML="<h2>🔊</h2>";
+    }
+}
+
+function disconnect(){
+    localStorage.removeItem("ID");
+  }
+
+function goAccount(){
+    if (localStorage.getItem("ID")!= null || localStorage.getItem("ID") != ""){
+        window.location.href="/actual-game/manage_account.html?IDaccount="+localStorage.getItem("ID")
+        print("/actual-game/manage_account.html?IDaccount="+localStorage.getItem("ID"))
+    } else {
+        window.location.href="../index.html"
     }
 }

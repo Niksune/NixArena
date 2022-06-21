@@ -26,10 +26,15 @@
                 <br>
                 <input type="password" name="password" id="password">
             </div>
-            <button id="submit">register</button>
+            <button id="submit"><h2>register</h2></button>
             <button><a href="../index.html">back</a></button>
         </div>
     </section>
+
+    <footer>
+      <h3>- Made by Nicolas Benoit and Teiva Scouarnec -</h3>
+  </footer>
+  
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
     <script>
       $("#submit").click(function () {
@@ -45,6 +50,7 @@
               alert("Account already exists");
             else{
               //alert("Account "+$("#name").val()+" Created !");
+              localStorage.setItem("ID",result);
               document.location.href="../actual-game/tutorial.html?IDaccount="+result;
             }
           },
