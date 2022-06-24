@@ -82,8 +82,8 @@
                     ")'><h2>❌Disarm</h2></button></div>";
                 }
                 result +=
-                  "</div><button onClick='destroyCharacter(" +
-                  character.id +
+                  "</div><button onClick='destroyCharacter("+'"' +
+                  character.id + '"'+
                   ")'><h2>🗑Destroy Character</h2></button>";
                 result += "</div>";
               });

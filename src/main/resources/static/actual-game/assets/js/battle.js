@@ -39,6 +39,8 @@ let player;
 let enemy;
 let seconds = 1000;
 let sounds =true;
+var audio=new Audio();
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -291,8 +293,10 @@ function soundMelee(){
     
         const random = Math.floor(Math.random() * sounds.length);
         console.log(random, sounds[random]);
-        var audio = new Audio(sounds[random]);
-        audio.play()
+        audio = new Audio(sounds[random]);
+        audio.volume = document.getElementById('volume-control').value/100;
+        audio.play();
+        console.log(audio.volume)
     }
 }
 

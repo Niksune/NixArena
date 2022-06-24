@@ -41,10 +41,10 @@ function changeTuto(value){
 
 function play(value=Boolean){
     if (value && index == (divTuto.length-1)){
-        window.location.href="choose_your_account.html"
+        window.location.href="manage_account.html"
     } else if (value && index != (divTuto.length-1)){
         return;
     } else if (!value){
-        window.location.href="choose_your_account.html"
+        window.location.href="manage_account.html"
     }
 }

@@ -22,14 +22,14 @@
         <div class="input-login">
             <div>
                 <label for="login">Your identifiant</label>
-                <input type="login" name="login" id="login">
+                <input type="login" name="login" id="login-login">
             </div>
             <div>
                 <label for="password">Your password</label>
                 <br>
-                <input type="password" name="password" id="password">
+                <input type="password" name="password" id="password-login">
             </div>
-            <button id="submit"><h2>login</h2></button>
+            <button id="submit-login"><h2>login</h2></button>
             <button><a href="../index.html">back</a></button>
         </div>
         
@@ -40,27 +40,6 @@
   </footer>
 
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
-    <script>
-      $("#submit").click(function () {
-        let values = { name : $("#login").val(), password : $("#password").val() };
-        console.log(values);
-        $.ajax({
-          type: "POST",
-          headers: { 'Content-Type': 'application/json' },
-          url: "../API/accounts/connection",
-          data: JSON.stringify(values),
-          success: function (result) {
-            if(result === "00000000-0000-0000-0000-000000000000")
-              alert("Wrong identifiers");
-            else
-              if (localStorage.getItem("ID")==null || localStorage.getItem("ID")==""){
-                localStorage.setItem("ID",result);
-                document.location.href="../actual-game/manage_account.html?IDaccount="+result;
-              }
-              
-          },
-        });
-      });
-    </script>
+    <script src="login.js"></script>
 </body>
 </html>

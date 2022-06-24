@@ -46,7 +46,10 @@
                 <div class="window-buttons" style="margin: 0 auto 0 auto;">
                     <button id="button_play" onclick="play()"><h2>Play</h2></button>
                     <button onclick="skip()" class="speed_button"><h2>Skip</h2></button>
+                </div>
+                <div style="margin: 0 auto;display: block;width: fit-content;">
                     <button id="button_sound" onclick="withSound()"><h2>🔊</h2></button>
+                    <input style="width: 60%;" onchange="change(value)" type="range" id="volume-control" min="0" max="100" value="50">
                 </div>
             </div>
             <div style="display: flex; flex-direction: column; margin: 0 auto 0 auto;">

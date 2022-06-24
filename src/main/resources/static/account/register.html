@@ -14,17 +14,17 @@
         <div class="input-login">
             <div>
                 <label for="name">Your identifiant</label>
-                <input type="login" name="name" id="name">
+                <input type="login" name="name" id="name-register">
             </div>
             <div>
                 <label for="mail">Your email</label>
                 <br>
-                <input type="email" name="mail" id="mail">
+                <input type="email" name="mail" id="mail-register">
             </div>
             <div>
                 <label for="password">Your password</label>
                 <br>
-                <input type="password" name="password" id="password">
+                <input type="password" name="password" id="password-register">
             </div>
             <button id="submit"><h2>register</h2></button>
             <button><a href="../index.html">back</a></button>
@@ -36,26 +36,6 @@
   </footer>
   
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
-    <script>
-      $("#submit").click(function () {
-        let values = { name : $("#name").val(), mail : $("#mail").val(), password : $("#password").val() };
-        console.log(values);
-        $.ajax({
-          type: "POST",
-          headers: { 'Content-Type': 'application/json' },
-          url: "../API/accounts",
-          data: JSON.stringify(values),
-          success: function (result) {
-            if(result === "AccountNameAlreadyExist")
-              alert("Account already exists");
-            else{
-              //alert("Account "+$("#name").val()+" Created !");
-              localStorage.setItem("ID",result);
-              document.location.href="../actual-game/tutorial.html?IDaccount="+result;
-            }
-          },
-        });
-      });
-    </script>
+    <script src="register.js"></script>
 </body>
 </html>
