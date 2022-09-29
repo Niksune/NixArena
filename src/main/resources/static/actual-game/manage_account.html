@@ -77,8 +77,8 @@
                   result +=
                     " | <strong>🗡WeaponAttack :</strong> " +
                     character.weaponEquipped.attack;
-                  result += "</p><button onClick='disarmCharacter(" +
-                    character.id +
+                  result += "</p><button onClick='disarmCharacter("+'"' +
+                    character.id + '"'+
                     ")'><h2>❌Disarm</h2></button></div>";
                 }
                 result +=
