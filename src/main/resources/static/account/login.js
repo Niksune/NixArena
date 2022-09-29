@@ -2,7 +2,7 @@ document.getElementById('login-login').onkeyup = function(e){
     console.log('login')
     if(e.keyCode == 13){
         console.log('post')
-        let values = { name : $("#login").val(), password : $("#password").val() };
+        let values = { name : $("#login-login").val(), password : $("#password-login").val() };
         console.log(values);
         $.ajax({
             type: "POST",
@@ -24,7 +24,7 @@ document.getElementById('login-login').onkeyup = function(e){
     console.log('password')
     if(e.keyCode == 13){
         console.log('post')
-        let values = { name : $("#login").val(), password : $("#password").val() };
+        let values = { name : $("#login-login").val(), password : $("#password-login").val() };
         console.log(values);
         $.ajax({
             type: "POST",
@@ -46,7 +46,7 @@ document.getElementById('login-login').onkeyup = function(e){
 
   $("#submit-login").click(function(){
     console.log('post')
-    let values = { name : $("#login").val(), password : $("#password").val() };
+    let values = { name : $("#login-login").val(), password : $("#password-login").val() };
     console.log(values);
     $.ajax({
         type: "POST",
