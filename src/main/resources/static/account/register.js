@@ -1,8 +1,8 @@
 document.getElementById('name-register').onkeyup = function(e){
     if(e.keyCode == 13){
-      if($("#name").val()==null || $("#mail").val()==null || $("#password").val()==null){
+      if($("#name-register").val()==null || $("#mail-register").val()==null || $("#password-register").val()==null){
         alert("complete the form");
-      } else{let values = { name : $("#name").val(), mail : $("#mail").val(), password : $("#password").val() };
+      } else{let values = { name : $("#name-register").val(), mail : $("#mail-register").val(), password : $("#password-register").val() };
       console.log(values);
       $.ajax({
         type: "POST",
@@ -23,9 +23,9 @@ document.getElementById('name-register').onkeyup = function(e){
     }}
 document.getElementById('mail-register').onkeyup = function(e){
     if(e.keyCode == 13){
-      if($("#name").val()==null || $("#mail").val()==null || $("#password").val()==null){
+      if($("#name-register").val()==null || $("#mail-register").val()==null || $("#password-register").val()==null){
         alert("complete the form");
-      } else{let values = { name : $("#name").val(), mail : $("#mail").val(), password : $("#password").val() };
+      } else{let values = { name : $("#name-register").val(), mail : $("#mail-register").val(), password : $("#password-register").val() };
       console.log(values);
       $.ajax({
         type: "POST",
@@ -46,9 +46,9 @@ document.getElementById('mail-register').onkeyup = function(e){
     }}
 document.getElementById('password-register').onkeyup = function(e){
     if(e.keyCode == 13){
-      if($("#name").val()==null || $("#mail").val()==null || $("#password").val()==null){
+      if($("#name-register").val()==null || $("#mail-register").val()==null || $("#password-register").val()==null){
         alert("complete the form");
-      } else{let values = { name : $("#name").val(), mail : $("#mail").val(), password : $("#password").val() };
+      } else{let values = { name : $("#name-register").val(), mail : $("#mail-register").val(), password : $("#password-register").val() };
       console.log(values);
       $.ajax({
         type: "POST",
@@ -69,9 +69,9 @@ document.getElementById('password-register').onkeyup = function(e){
     }}
 
   $("#submit-register").click(function (){
-    if($("#name").val()==null || $("#mail").val()==null || $("#password").val()==null){
+    if($("#name-register").val()==null || $("#mail-register").val()==null || $("#password-register").val()==null){
       alert("complete the form");
-    } else{let values = { name : $("#name").val(), mail : $("#mail").val(), password : $("#password").val() };
+    } else{let values = { name : $("#name-register").val(), mail : $("#mail-register").val(), password : $("#password-register").val() };
     console.log(values);
     $.ajax({
       type: "POST",
