@@ -39,7 +39,7 @@ public class Account {
 
     public void addStamina(int staminaToAdd){
         setStamina(getStamina()+staminaToAdd);
-    };
+    }
 
     public void removeStamina(int staminaToRemove){
         setStamina(getStamina()-staminaToRemove);
@@ -70,6 +70,11 @@ public class Account {
     public Account(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public Account(UUID ID, String name) {
+        this.ID = ID;
+        this.name = name;
     }
 
     public String getMail() {
